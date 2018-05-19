@@ -43,6 +43,11 @@ const branchOptions = [
 	{ key: 'c', text: 'Kolkata', value: 'Kolkata' }
 ];
 
+const taxOptions = [
+	{ key: 'a', text: 'CGST/SGST', value: 'CGST/SGST' },
+	{ key: 'b', text: 'IGST', value: 'IGST' }
+];
+
 // Challan type options
 const challanTypeOptions = [
 	{ key: 'a', text: 'Rental',  value: 'rental' },
@@ -70,7 +75,8 @@ class GenerateChallan extends React.Component {
 		// else do the default 
 		else {		
 			this.state = {
-				selectedPaymentMode: 'Payment Mode',
+				selectedPaymentMode: 'Monthly',
+				selectedTaxType:'CGST/SGST',
 				selectedCustomerId: null,
 				selectedLocationId: null,
 				selectedChallanId: null,
@@ -85,6 +91,10 @@ class GenerateChallan extends React.Component {
 				deliveryPerson: '',
 				comment: '',
 				selectedBranch: '',
+				netAmount:null,
+				netGst:null,
+				netTotalAmount:null,
+
 
 				// for dropdowns 
 				customerOptions: [],
@@ -231,6 +241,7 @@ class GenerateChallan extends React.Component {
 		this.state.challanCartItems.forEach(element => {
 			total = Number(total) + Number(element.totalPrice!==undefined ? element.totalPrice : 0)
 		});
+		this.state.netTotalAmount=total;
 		return `${total}`
 	}
 
@@ -240,6 +251,8 @@ class GenerateChallan extends React.Component {
 		this.state.challanCartItems.forEach(element => {
 			total = Number(total) + Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0)
 		});
+		this.state.netAmount=total;
+		console.log('net amount='+total);
 		return `${total}`
 	}
 
@@ -247,8 +260,9 @@ class GenerateChallan extends React.Component {
 	calculateTotalGST = () => {
 		var total = 0
 		this.state.challanCartItems.forEach(element => {
-			total = Number(total) + Number(element.gst!==undefined ? element.gst : 0)*Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0)
+			total = (Number(total) + Number(element.gst!==undefined ? element.gst : 0)*Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0))/100;
 			// *Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0)
+			this.state.netGst=total;
 		});
 		return `${total}`
 	}
@@ -539,7 +553,7 @@ class GenerateChallan extends React.Component {
 							.then(r => r.json()) 
 							.then(data => {
 								if(data.isSuccess) {
-									alert('submitted dirct')
+									//alert('submitted dirct')
 									this.setState({ printChallan: true })
 								}
 							})	
@@ -558,7 +572,12 @@ class GenerateChallan extends React.Component {
 		
 	}
 
-	onChangePaymentMode= (evt, data) => this.setState({selectedPaymentMode: data.value});
+	onChangePaymentMode= (evt, data) => { 
+		this.setState({selectedPaymentMode: data.value})
+		//this.onChangeUnitPrice(evt);
+	}
+
+	onChangeTaxType= (evt, data) => this.setState({selectedTaxType: data.value});
 
 	// Input on change handlers
 
@@ -728,9 +747,12 @@ class GenerateChallan extends React.Component {
 				var gst = item.gst!==undefined ? item.gst : 0; 
 				
 				var rentEndDate = ((item.rentEndDate !== undefined) ? moment(item.rentEndDate) : moment())
-				var days = rentEndDate.diff(rentStartDate, 'days')
+				
+				var multiplier = this.state.selectedPaymentMode ==='Daily' ? (rentEndDate.diff(rentStartDate, 'days')):1;
+
+				//var days = rentEndDate.diff(rentStartDate, 'days')
 					
-				var totalUnitPrice = unitPrice * days
+				var totalUnitPrice = unitPrice * multiplier
 				var total = Number(totalUnitPrice)+Number(totalUnitPrice)*Number(gst)/100
 				return { ...item, unitPrice: unitPrice, totalUnitPrice: totalUnitPrice, totalPrice: total};
 			}						  
@@ -745,7 +767,9 @@ class GenerateChallan extends React.Component {
 			if (idx !== sidx) {
 			  return item;
 			} else {
-			  var totalUnitPrice = item.totalUnitPrice!==undefined ? item.totalUnitPrice : 0; 
+			  var totalUnitPrice = item.totalUnitPrice!==undefined ? item.totalUnitPrice : 0;
+			  var taxType = this.state.selectedTaxType; 
+
 			  var total = Number(totalUnitPrice) + Number(event.target.value)*Number(totalUnitPrice)/100
 			  return { ...item, gst: event.target.value, totalPrice: total};
 			}						  
@@ -816,17 +840,21 @@ class GenerateChallan extends React.Component {
 			return(
 				<Challan
 					// props list 
-					customer = {this.state.selectedCustomerDetails}
-					currentDate = {moment(this.state.rentStartDate).format("DD/MM/YYYY")}
-					orderPo = { this.state.po+'. '+this.state.poReference}
-					messenger = {this.state.deliveryPerson}
-					locations = {this.state.customerLocations}
-					locationId = {this.state.selectedLocationId}
-					cartItems = {this.state.challanCartItems}
-					cin = {this.state.cnNumber}
-					customerId = {this.state.selectedCustomerId}
-					contactPerson = {this.state.selectedContactPerson}
-					challanType = {this.state.selectedChallanType}
+					customer 		= {this.state.selectedCustomerDetails}
+					currentDate 	= {moment(this.state.rentStartDate).format("DD/MM/YYYY")}
+					orderPo 		= { this.state.po+'. '+this.state.poReference}
+					messenger 		= {this.state.deliveryPerson}
+					locations 		= {this.state.customerLocations}
+					locationId 		= {this.state.selectedLocationId}
+					cartItems 		= {this.state.challanCartItems}
+					cin 			= {this.state.cnNumber}
+					customerId 		= {this.state.selectedCustomerId}
+					contactPerson 	= {this.state.selectedContactPerson}
+					challanType 	= {this.state.selectedChallanType}
+					netAmount		= {this.state.netAmount}
+					netGst			= {this.state.netGst}
+					netTotalAmount	= {this.state.netTotalAmount}
+					ewayBill		= {this.state.ueaNumber}
 				/> 
 			)
 		}
@@ -1010,10 +1038,11 @@ class GenerateChallan extends React.Component {
 				<Table.HeaderCell>Current Price</Table.HeaderCell>
 				<Table.HeaderCell>Rend End Date</Table.HeaderCell>
 				<Table.HeaderCell>Payment Mode*</Table.HeaderCell>
-				<Table.HeaderCell>Daily Unit price*</Table.HeaderCell>
+				<Table.HeaderCell>Price*</Table.HeaderCell>
 				<Table.HeaderCell>Total Unit price</Table.HeaderCell>
-				<Table.HeaderCell>GST</Table.HeaderCell>
-				<Table.HeaderCell>Total Unit Price with tax</Table.HeaderCell>
+				<Table.HeaderCell>Tax Type</Table.HeaderCell>
+				<Table.HeaderCell>Tax %</Table.HeaderCell>
+				<Table.HeaderCell>Total Price with tax</Table.HeaderCell>
 			</Table.Header>
 			<Table.Body>
 				{this.state.challanCartItems.map((obj, idx) => (
@@ -1046,18 +1075,31 @@ class GenerateChallan extends React.Component {
 								onChange={this.onChangePaymentMode}
 								value={this.state.selectedPaymentMode}
 								size="small"
-								style={{ maxWidth: "400px" }}
+								style={{ maxWidth: "200px" }}
 								placeholder="Select Payment Mode"
+								selectedValue={this.state.selectedPaymentMode}
 								options={paymentOptions} />
 						</Table.Cell>
 						<Table.Cell><Input value={obj.unitPrice} onChange={this.onChangeUnitPrice(idx)}/></Table.Cell>
 						<Table.Cell>{obj.totalUnitPrice}</Table.Cell>
+						<Table.Cell>
+							<Form.Select
+								onChange={this.onChangeTaxType}
+								value={this.state.selectedTaxType}
+								size="small"
+								style={{ maxWidth: "100px" }}
+								placeholder="Select Tax Type"
+								selectedValue={this.state.selectedTaxType}
+								options={taxOptions} />
+						</Table.Cell>
 						<Table.Cell><Input value={obj.gst} onChange={this.onChangeGst(idx)} small/></Table.Cell>
 						<Table.Cell>{(obj.totalPrice!==undefined ? <div>₹{obj.totalPrice}</div> : <div>₹0</div>)}</Table.Cell>
 					</Table.Row>
 				))}
 			</Table.Body>
 			<Table.Footer celled>
+				<Table.HeaderCell></Table.HeaderCell>
+				<Table.HeaderCell></Table.HeaderCell>
 				<Table.HeaderCell></Table.HeaderCell>
 				<Table.HeaderCell></Table.HeaderCell>
 				<Table.HeaderCell></Table.HeaderCell>

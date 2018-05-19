@@ -59,7 +59,7 @@ class DisplayAssets extends Component {
 
 			// temporary array to hold table data (used for filter)
 			tableDataInitial:[{
-				assetId: "",		 
+					assetId: "",		 
 					make:"", 
 					assetTypeId: "", 
 					warrantyEndDate:"", 
@@ -73,6 +73,7 @@ class DisplayAssets extends Component {
 					transferOrderNo:"", 
 					transferOrderDate:"",
 					dynaData:[],
+					hsnCode:""
 				},],
 			
 			 tableData:[
@@ -91,6 +92,7 @@ class DisplayAssets extends Component {
 					transferOrderNo:"", 
 					transferOrderDate:"",
 					dynaData:[],
+					hsnCode:""
                 },
 			],
 			// display item
@@ -317,11 +319,11 @@ class DisplayAssets extends Component {
 
 		var jsn_hsnCode = JSON.stringify(data.hsnResult, null, 2);
 		var hsnArr = JSON.parse(jsn_hsnCode);
-		console.log("JSON.stringify(data.hsn_result) = "+jsn_hsnCode);
+		//console.log("JSON.stringify(data.hsn_result) = "+jsn_hsnCode);
 		var hsnarr = hsnArr.length;
 		for ( i=0; i<hsnarr;i++)
 		{
-			console.log("JSON.stringify(data.hsn_result) = "+hsnarr);
+			//console.log("JSON.stringify(data.hsn_result) = "+hsnarr);
 			this.state.hsnCode= hsnArr[i].hsnCode;
 		}
 		
@@ -397,7 +399,8 @@ class DisplayAssets extends Component {
 					branch:    staticr[i].branch,
 					transferOrderNo:    staticr[i].transfer_order_no,
 					transferOrderDate:todate,
-					dynaData:    darray
+					dynaData:    darray,
+					hsnCode:this.state.hsnCode
 				}]),
 				tableDataInitial:this.state.tableDataInitial.concat([{        
 
@@ -414,7 +417,8 @@ class DisplayAssets extends Component {
 					branch:    staticr[i].branch,
 					transferOrderNo:    staticr[i].transfer_order_no,
 					transferOrderDate:todate,
-					dynaData:    darray
+					dynaData:    darray,
+					hsnCode:this.state.hsnCode
                 }])
 			})
 		}
