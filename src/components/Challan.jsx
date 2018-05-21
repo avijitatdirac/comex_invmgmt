@@ -51,7 +51,7 @@ class ComponentToPrint extends React.Component {
                                 <Grid columns={2}>
                                     <Grid.Row>
                                         <Grid.Column>
-                                            Challan No:
+                                            Challan No: {this.props.challan_number}
                                         </Grid.Column>
                                         <Grid.Column>
                                             Date: {this.props.currentDate}

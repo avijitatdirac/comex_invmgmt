@@ -94,6 +94,7 @@ class GenerateChallan extends React.Component {
 				netAmount:null,
 				netGst:null,
 				netTotalAmount:null,
+				last_challan_number:'',
 
 
 				// for dropdowns 
@@ -251,7 +252,8 @@ class GenerateChallan extends React.Component {
 		this.state.challanCartItems.forEach(element => {
 			total = Number(total) + Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0)
 		});
-		this.state.netAmount=total;
+		//this.state.netAmount=total;
+		this.setState({netAmount:total})
 		console.log('net amount='+total);
 		return `${total}`
 	}
@@ -542,6 +544,8 @@ class GenerateChallan extends React.Component {
 								if(data.isSuccess) {
 									alert('submitted draft')
 									this.setState({ printChallan: true })
+									//this.setState({last_challan_number: data.last_challan_number})
+									console.log("data.last_challan_number ="+data.last_challan_number)
 								}
 							})
 						}
@@ -553,8 +557,10 @@ class GenerateChallan extends React.Component {
 							.then(r => r.json()) 
 							.then(data => {
 								if(data.isSuccess) {
-									//alert('submitted dirct')
+									alert('submitted after change_inventory_status')
 									this.setState({ printChallan: true })
+									console.log('last_challan_number ='+JSON.stringify(data.last_challan_number[0].last_challan))
+									this.setState({last_challan_number:data.last_challan_number[0].last_challan})
 								}
 							})	
 						}				
@@ -855,6 +861,7 @@ class GenerateChallan extends React.Component {
 					netGst			= {this.state.netGst}
 					netTotalAmount	= {this.state.netTotalAmount}
 					ewayBill		= {this.state.ueaNumber}
+					challan_number	= {this.state.last_challan_number}
 				/> 
 			)
 		}
