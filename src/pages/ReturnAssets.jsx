@@ -1,7 +1,7 @@
 import Moment from "react-moment"
 import React, { Component } from "react";
-import { Radio, Menu, Dimmer, Loader, Container, Image, Checkbox, Dropdown, Divider, Button, Form, Table, Modal, Input, Icon, Step, Header, Sidebar, Segment, FormGroup, Label, Grid, GridColumn, Card } from "semantic-ui-react";
-
+import { Radio, Menu, Dimmer, Loader, Container, Image, Checkbox, Dropdown, Divider, Button, Form, Table, Modal, Input, Icon, Step, Header, Sidebar, Segment, FormGroup, Label, Grid, GridColumn, Card, FormRadio } from "semantic-ui-react";
+//import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 /*TO DO
 Manage Returned from Repair Assets
 */
@@ -466,10 +466,10 @@ class ReturnAssets extends Component
                     key={obj.assetid}
                     style={{ cursor: "pointer" }}
                     >
-                    <Table.Cell>{<Checkbox style={{backgroundColor:'green'}}
+                    <Table.Cell>{<FormRadio style={{backgroundColor:'black'}}
 					onClick={this.checkedAssetsProper.bind(this,obj.assetid,obj)}/>}
 					</Table.Cell>
-                    <Table.Cell>{<Checkbox style={{backgroundColor:'green'}}
+                    <Table.Cell>{<FormRadio style={{backgroundColor:'black'}}
 					onClick={this.checkedAssetsDamaged.bind(this,obj.assetid,obj)}/>}
 					</Table.Cell>
                     <Table.Cell>{this.state.customerName}</Table.Cell>

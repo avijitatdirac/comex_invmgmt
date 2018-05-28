@@ -252,8 +252,8 @@ class GenerateChallan extends React.Component {
 		this.state.challanCartItems.forEach(element => {
 			total = Number(total) + Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0)
 		});
-		//this.state.netAmount=total;
-		this.setState({netAmount:total})
+		this.state.netAmount=total;
+		//this.setState({netAmount:total})
 		console.log('net amount='+total);
 		return `${total}`
 	}
