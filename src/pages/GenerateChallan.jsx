@@ -261,8 +261,11 @@ class GenerateChallan extends React.Component {
 	// calculate total price 
 	calculateTotalGST = () => {
 		var total = 0
+		var l_gst=0
 		this.state.challanCartItems.forEach(element => {
-			total = (Number(total) + Number(element.gst!==undefined ? element.gst : 0)*Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0))/100;
+			l_gst = (Number(element.gst!==undefined ? element.gst : 0)*Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0))/100;
+			total=total+l_gst;
+			//total = (Number(total) + Number(element.gst!==undefined ? element.gst : 0)*Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0))/100;
 			// *Number(element.totalUnitPrice!==undefined ? element.totalUnitPrice : 0)
 			this.state.netGst=total;
 		});
@@ -545,7 +548,7 @@ class GenerateChallan extends React.Component {
 									alert('submitted draft')
 									this.setState({ printChallan: true })
 									//this.setState({last_challan_number: data.last_challan_number})
-									console.log("data.last_challan_number ="+data.last_challan_number)
+									//console.log("data.last_challan_number ="+data.last_challan_number)
 								}
 							})
 						}
@@ -775,7 +778,7 @@ class GenerateChallan extends React.Component {
 			} else {
 			  var totalUnitPrice = item.totalUnitPrice!==undefined ? item.totalUnitPrice : 0;
 			  var taxType = this.state.selectedTaxType; 
-
+			  var l_gst = Number(event.target.value)*Number(totalUnitPrice)/100
 			  var total = Number(totalUnitPrice) + Number(event.target.value)*Number(totalUnitPrice)/100
 			  return { ...item, gst: event.target.value, totalPrice: total};
 			}						  
@@ -1046,7 +1049,7 @@ class GenerateChallan extends React.Component {
 				<Table.HeaderCell>Rend End Date</Table.HeaderCell>
 				<Table.HeaderCell>Payment Mode*</Table.HeaderCell>
 				<Table.HeaderCell>Price*</Table.HeaderCell>
-				<Table.HeaderCell>Total Unit price</Table.HeaderCell>
+				{/* <Table.HeaderCell>Total Unit price</Table.HeaderCell> */}
 				<Table.HeaderCell>Tax Type</Table.HeaderCell>
 				<Table.HeaderCell>Tax %</Table.HeaderCell>
 				<Table.HeaderCell>Total Price with tax</Table.HeaderCell>
@@ -1088,7 +1091,7 @@ class GenerateChallan extends React.Component {
 								options={paymentOptions} />
 						</Table.Cell>
 						<Table.Cell><Input value={obj.unitPrice} onChange={this.onChangeUnitPrice(idx)}/></Table.Cell>
-						<Table.Cell>{obj.totalUnitPrice}</Table.Cell>
+						{/* <Table.Cell>{obj.totalUnitPrice}</Table.Cell> */}
 						<Table.Cell>
 							<Form.Select
 								onChange={this.onChangeTaxType}
@@ -1111,10 +1114,11 @@ class GenerateChallan extends React.Component {
 				<Table.HeaderCell></Table.HeaderCell>
 				<Table.HeaderCell></Table.HeaderCell>
 				<Table.HeaderCell></Table.HeaderCell>
-				<Table.HeaderCell></Table.HeaderCell>
-				<Table.HeaderCell></Table.HeaderCell>
+				{/* <Table.HeaderCell></Table.HeaderCell> */}
+				{/* <Table.HeaderCell></Table.HeaderCell> */}
 				<Table.HeaderCell>Total Price</Table.HeaderCell>
 				<Table.HeaderCell>₹{this.calculateTotalUnitPrice()}</Table.HeaderCell>
+				<Table.HeaderCell></Table.HeaderCell>
 				<Table.HeaderCell>₹{this.calculateTotalGST()}</Table.HeaderCell>
 				<Table.HeaderCell>₹{this.calculateTotal()}</Table.HeaderCell>
 			</Table.Footer>

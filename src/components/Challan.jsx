@@ -36,78 +36,65 @@ class ComponentToPrint extends React.Component {
 
 					<Grid columns={2} celled>
 						<Grid.Row>
-							<Grid.Column>
-								<Header as="h3">COMPUTER EXCHANGE PVT.LTD</Header>
-								<Container textAlign="left">
-									#102, First Floor, May Fair Court, Nachiket Park, Dr. Pai Marg, Baner, Pune 411 045
-                                    <strong>www.computerexchangeindia.com</strong>
-									<p>Dial: +91-20-65200269/ 09830951013</p>
-									<p>CIN: {this.props.cin}</p>
-                                    <p>GSTN: GSTN</p>
-                                    <p>PAN: PAN</p>
-                                </Container>
-							</Grid.Column>
-							<Grid.Column>
-                                <Grid columns={2}>
-                                    <Grid.Row>
-                                        <Grid.Column>
-                                            Challan No: {this.props.challan_number}
-                                        </Grid.Column>
-                                        <Grid.Column>
-                                            Date: {this.props.currentDate}
-                                        </Grid.Column>
-                                    </Grid.Row>
-                                </Grid>
-							</Grid.Column>
+							<Grid.Column>Challan No: {this.props.challan_number}</Grid.Column>
+							<Grid.Column>Date: {this.props.currentDate}</Grid.Column>
 						</Grid.Row>
 						<Grid.Row>
 							<Grid.Column>
-								<Grid columns={2}>
-									<Grid.Row>
-										<Grid.Column width={4}>
-											<strong>M/S</strong>
-										</Grid.Column>
-										<Grid.Column width={12}>
-											<Container textAlign="left">
-                                                <p><strong>{this.props.customer.cName}</strong></p>
-                                                <p>CIN: {this.props.cin}</p>
-                                                <p>GST: Customer GST</p>
-                                                <p>{this.getMainLocation()}</p>
-											</Container>
-										</Grid.Column>
-									</Grid.Row>
-									<Grid.Row>
-										<Grid.Column width={4}>
-											<strong>Delivery at</strong>
-										</Grid.Column>
-										<Grid.Column width={12}>
-											<Container textAlign="left">
-												{this.props.customer.address}, {this.props.customer.city},{' '}
-												{this.props.customer.state}, {this.props.customer.pincode}
-											</Container>
-										</Grid.Column>
-									</Grid.Row>
-								</Grid>
+								<Header as="h3">COMPUTER EXCHANGE PVT.LTD</Header>
+								<Container textAlign="left">
+									<p>#102, First Floor, May Fair Court, Nachiket Park, Dr. Pai Marg,</p>
+									<p>Baner, Pune 411 045</p>
+									<p>Web: www.computerexchangeindia.com</p>
+									<p>Dial: +91-20-65200269/ 09830951013</p>
+									<p>CIN: {this.props.cin}</p>
+									<p>GSTN: GSTN</p>
+									<p>PAN: PAN</p>
+								</Container>
 							</Grid.Column>
 							<Grid.Column>
-								<Table basic>
-									<Table.Body>										
+								<Container textAlign="left">
+									<p>
+										<strong>M/S</strong>
+									</p>
+									<p>
+										<strong>{this.props.customer.cName}</strong>
+									</p>
+									<p>CIN: {this.props.cin}</p>
+									<p>GST: Customer GST</p>
+									<p>{this.getMainLocation()}</p>
+									<p>
+										<strong>Delivery at</strong>
+									</p>
+									<p>
+										{this.props.customer.address}, {this.props.customer.city},{' '}
+									</p>
+									<p>
+										{this.props.customer.state}, {this.props.customer.pincode}
+									</p>
+								</Container>
+							</Grid.Column>
+						</Grid.Row>
+						<Grid.Row>
+							<Grid.Column width={4}>
+								<Table singleLine>
+									<Table.Header>
 										<Table.Row>
-											<Table.Cell>
+											<Table.HeaderCell>
 												<strong>Order PO#</strong>
-											</Table.Cell>
-											<Table.Cell>{this.props.orderPo}</Table.Cell>
-										</Table.Row>
-										<Table.Row>
-											<Table.Cell>
-												<strong>Contacts</strong>
-											</Table.Cell>
-											<Table.Cell>{this.props.contactPerson}</Table.Cell>
-										</Table.Row>
-										<Table.Row>
-											<Table.Cell>
+											</Table.HeaderCell>
+											<Table.HeaderCell>
+												<strong>Contact Person</strong>
+											</Table.HeaderCell>
+											<Table.HeaderCell>
 												<strong>Messenger</strong>
-											</Table.Cell>
+											</Table.HeaderCell>
+										</Table.Row>
+									</Table.Header>
+									<Table.Body>
+										<Table.Row>
+											<Table.Cell>{this.props.orderPo}</Table.Cell>
+											<Table.Cell>{this.props.contactPerson}</Table.Cell>
 											<Table.Cell>{this.props.messenger}</Table.Cell>
 										</Table.Row>
 									</Table.Body>
@@ -124,10 +111,15 @@ class ComponentToPrint extends React.Component {
 						<Grid.Row>{this.assetListTable()}</Grid.Row>
 						<Grid.Row>
 							<Grid.Column width={4}>
-                                <p><strong>E-Way Bill:</strong> {this.props.ewayBill}</p>                                
+								<p>
+									<strong>E-Way Bill:</strong> {this.props.ewayBill}
+								</p>
 							</Grid.Column>
 							<Grid.Column width={12}>
-                                <p><strong>Remarks:</strong></p><p>Sending on rental basis</p>
+								<p>
+									<strong>Remarks:</strong>
+								</p>
+								<p>Sending on rental basis</p>
 							</Grid.Column>
 						</Grid.Row>
 						<Grid.Row>
@@ -177,38 +169,27 @@ class ComponentToPrint extends React.Component {
 			<Table.Header>
 				<Table.HeaderCell>Qty</Table.HeaderCell>
 				<Table.HeaderCell>Serial No</Table.HeaderCell>
-                <Table.HeaderCell>HSN Code</Table.HeaderCell>
-                <Table.HeaderCell>Part Code</Table.HeaderCell>
+				<Table.HeaderCell>HSN Code</Table.HeaderCell>
+				<Table.HeaderCell>Part Code</Table.HeaderCell>
 				<Table.HeaderCell>Description of goods</Table.HeaderCell>
-                <Table.HeaderCell>Amount</Table.HeaderCell>
-                <Table.HeaderCell>GST Type</Table.HeaderCell>
-                <Table.HeaderCell>Total Amount</Table.HeaderCell>
+				<Table.HeaderCell>Unit Price</Table.HeaderCell>
+				<Table.HeaderCell>GST</Table.HeaderCell>
+				<Table.HeaderCell>Total Amount</Table.HeaderCell>
 			</Table.Header>
 			<Table.Body>
 				{this.props.cartItems.map(item => (
 					<Table.Row>
 						<Table.Cell>1</Table.Cell>
-                        <Table.Cell>
-                            {item.serialNo}
-                        </Table.Cell>
-                        <Table.Cell>
-                            {item.hsnCode}
-                        </Table.Cell>
-                        <Table.Cell>
-                            {item.partCode}
-                        </Table.Cell>
-						<Table.Cell>							
-                            {item.make}{item.dynaData.map(detail => `${'/' + detail.value}`)}
-						</Table.Cell>
+						<Table.Cell>{item.serialNo}</Table.Cell>
+						<Table.Cell>{item.hsnCode}</Table.Cell>
+						<Table.Cell>{item.partCode}</Table.Cell>
 						<Table.Cell>
-                            {item.totalUnitPrice}
-                        </Table.Cell>
-                        <Table.Cell>
-                            {item.gst}
-                        </Table.Cell>
-                        <Table.Cell>
-                            {item.totalPrice}
-                        </Table.Cell>
+							{item.make}
+							{item.dynaData.map(detail => `${'/' + detail.value}`)}
+						</Table.Cell>
+						<Table.Cell>{item.totalUnitPrice}</Table.Cell>
+						<Table.Cell>{(item.gst*item.totalUnitPrice)/100}</Table.Cell>
+						<Table.Cell>{item.totalPrice}</Table.Cell>
 					</Table.Row>
 				))}
 			</Table.Body>
@@ -216,20 +197,11 @@ class ComponentToPrint extends React.Component {
 				<Table.HeaderCell>Total Qty:{this.props.cartItems.length}</Table.HeaderCell>
 				<Table.HeaderCell />
 				<Table.HeaderCell />
-                <Table.HeaderCell />
-                <Table.HeaderCell>
-                        Net Amount
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                    {this.props.netAmount}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                    {this.props.netGst}
-                </Table.HeaderCell>
-                <Table.HeaderCell>
-                {this.props.netTotalAmount}
-                </Table.HeaderCell>
-                
+				<Table.HeaderCell />
+				<Table.HeaderCell>Net Amount</Table.HeaderCell>
+				<Table.HeaderCell>{this.props.netAmount}</Table.HeaderCell>
+				<Table.HeaderCell>{this.props.netGst}</Table.HeaderCell>
+				<Table.HeaderCell>{this.props.netTotalAmount}</Table.HeaderCell>
 			</Table.Footer>
 		</Table>
 	);
@@ -251,6 +223,11 @@ class Challan extends React.Component {
 					customerId={this.props.customerId}
 					contactPerson={this.props.contactPerson}
 					cin={this.props.cin}
+					netAmount={this.props.netAmount}
+					netGst={this.props.netGst}
+					netTotalAmount={this.props.netTotalAmount}
+					ewayBill={this.props.ewayBill}
+					challan_number={this.props.challan_number}
 				/>
 				<ReactToPrint
 					trigger={() => (
