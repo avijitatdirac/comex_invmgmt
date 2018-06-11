@@ -1,5 +1,5 @@
 import React from "react";
-import { slide as Menu } from "react-burger-menu";
+import { elastic as Menu } from "react-burger-menu";
 
 const SideMenu = props => (
   <div>
@@ -27,6 +27,10 @@ const SideMenu = props => (
       </a>
       <a id="challanDraft" className="menu-item" href="/challanDraft">
       Saved Challan Drafts
+      </a>
+      <hr/>
+      <a id="settings" className="menu-item" href="/settings">
+      Settings
       </a>
     </Menu>
   </div>
