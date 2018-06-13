@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'reac
 
 import './css/index.css';
 import './css/main.css';
+
 import App from './App';
 
 class Login extends Component {
@@ -42,7 +43,7 @@ class Login extends Component {
 		var queryString =
 			'/validateUser?data=' +
 			JSON.stringify({
-				userName: this.state.userName,
+				username: this.state.userName,
 				password: this.state.password,
 			});
 		console.log('queryString = ', queryString);
