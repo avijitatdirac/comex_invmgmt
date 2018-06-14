@@ -38,10 +38,7 @@ class Login extends Component {
 	handleLoginClick() {
 
 
-		let user = {username:'admin'
-
-		
-	   }
+		let user = {username:'admin'}
 		this.setState({
 			isLoggedIn: true,
 		});
