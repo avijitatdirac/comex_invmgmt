@@ -4,6 +4,9 @@ import { elastic as Menu } from "react-burger-menu";
 const SideMenu = props => (
   <div>
     <Menu pageWrapId={"page-wrap"} outerContainerId={"outer-container"}>
+    <a id="home" className="menu-item" href="/login">
+        Logout
+      </a>
       <a id="home" className="menu-item" href="/">
         Dashboard
       </a>
@@ -16,7 +19,7 @@ const SideMenu = props => (
       <a id="addAsset" className="menu-item" href="/addAsset">
         Add to Inventory
       </a>
-      <a id="displayAssets" classname="menu-item" href="/displayAssets" >
+      <a id="displayAssets" className="menu-item" href="/displayAssets" >
         Order Asset
       </a>
       <a id="contact" className="menu-item" href="/editAssetType">

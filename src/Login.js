@@ -1,137 +1,154 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter } from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Link, Redirect, withRouter  } from 'react-router-dom';
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import './css/index.css';
 import './css/main.css';
-
+import LOGO from "./assets/ce_logo.gif";
+import {validation} from './Classes'
 import App from './App';
-
+import { history } from "./_helpers";
 class Login extends Component {
-	state = {
-		redirectToReferrer: false,
-		isLoggedIn: false,
+
+constructor(props) {
+	super(props);	
+	this.state = {
+		username: "",
+		password: "",
+		submitted: false,
+		usernameError : false,
+		passwordError :false,
+		usernameErrorText : '',
+		passwordErrorText :'',
+		successText:''
 	};
+	this.handleChange = this.handleChange.bind(this);
+	this.handleSubmit = this.handleSubmit.bind(this);
+	localStorage.removeItem("user");
+    localStorage.removeItem("token");
 
-	// login = () => {
-	// 	fakeAuth.authenticate(() => {
-	// 		this.setState({ redirectToReferrer: true });
-	// 	});
-	// };
+}
+handleChange(e) {
+	const { name, value } = e.target;
+	this.setState({ [name]: value });
+	if(name=='username' && name.length > 0){this.setState( {usernameError: false ,usernameErrorText:'',successText:''});}
+	if(name=='password' && name.length > 0){this.setState( {passwordError: false ,passwordErrorText:'',successText:''});}
+  }
 
-	// login = () => {
-	// 	console.log('login function called');
-	// 	this.setState({ isLoggedIn: true });
-	// };
-
-	constructor(props) {
-		super(props);
-		this.handleLoginClick = this.handleLoginClick.bind(this);
-		this.handleLogoutClick = this.handleLogoutClick.bind(this);
-		this.state = {
-			isLoggedIn: false,
-			userName: '',
-			password: '',
-		};
+  handleSubmit(e) {  
+	  
+    e.preventDefault();
+    this.setState({ submitted: true });
+	const { username, password } = this.state;	
+	let isValid = true;
+	if(!username){  this.setState({ usernameError: true,usernameErrorText:validation.messages().emailEmpty} ); isValid = false}    
+	if (validation.validEmail(username)){
+		this.setState({ usernameError: false } )		
+	}else{
+		this.setState({ usernameError: true ,usernameErrorText:validation.messages().notValidEmail })
+		isValid = false
 	}
-
-	handleLoginClick() {
-
-
-		let user = {username:'admin'}
-		this.setState({
-			isLoggedIn: true,
-		});
-		console.log(`username & password are ${this.state.userName} & ${this.state.password}`);
-		var queryString =
-			'/validateUser?data=' +
-			JSON.stringify({
-				username: this.state.userName,
-				password: this.state.password,
-			});
-		console.log('queryString = ', queryString);
-		fetch(queryString, { method: 'POST' })
-			.then(r => r.json())
-			.then(data => {
-				console.log(data);
-				if (data.isSuccess) {
-					// say operation succeeded, no failure
-					this.setState({ isLoggedIn: true });
-				} else {
-					// say operation failure no success
-					this.setState({ isLoggedIn: false });
-					// stop further insertions
-					return;
-				}
-			})
-			.catch(err => console.log(err));
-	}
-
-	handleLogoutClick() {
-		this.setState({ isLoggedIn: false });
-	}
-
-	handlePasswordInput = event => this.setState({ password: event.target.value });
-	handleUserNameInput = event => this.setState({ userName: event.target.value });
+	if(password){
+		if(!validation.passwordLenghtCheck(password)){
+			isValid = false
+			this.setState({ passwordError: true ,passwordErrorText:validation.messages().passwordLength});
+		}
+	}else{
+		this.setState({ passwordError: true ,passwordErrorText:validation.messages().passEmpty});
+		isValid = false
+	}	
+	if(isValid){
+	    
+        if(username == 'admin@yopmail.com' && password =='12345678'){
+			localStorage.setItem('user',JSON.stringify({username:'admin@yopmail.com', username:'admin', role:'admin',branch:'Kolkata'}))
+			localStorage.setItem("token",'afsjbgdkghdfhfhfhjflhjfjsbfdhgkdghdghfkgffhnbgvgkf');
+			history.push('/dashboard');
+			this.setState({successText:validation.messages().loginSuccess+ 'kalkk' });
+		}else if(username == 'user@yopmail.com' && password =='87654321'){
+			localStorage.setItem('user',JSON.stringify({username:'sanjeet@yopmail.com',username:'sanjeet', role:'user',branch:'Pune'}))
+			localStorage.setItem("token",'trerergtbfvfkdhbdfnvksfhksfhsfnsfskfsfjs');
+			history.push('/dashboard')
+			this.setState({successText:validation.messages().loginSuccess });
+		}else{
+			this.setState({ passwordError: true ,passwordErrorText:validation.messages().invalidUser});
+		}
+	}	
+  }
+	
 
 	render() {
 		const { from } = { from: { pathname: '/' } };
-		const { redirectToReferrer } = this.state;
+		const { redirectToReferrerm,usernameError,passwordError,submitted ,usernameErrorText,passwordErrorText,successText} = this.state;
 
-		if (this.state.isLoggedIn) {
+		/*if (this.state.isLoggedIn) {
 			return <App />;
 		}
 		if (redirectToReferrer) {
 			return <Redirect to={from} />;
-		}
+		}*/
 		return (
-			<div className="login100-form validate-form">
-				<div className="wrap-login100">
-					<div className="limiter">
-						<div className="container-login100">
-							<div className="wrap-login100">
-								<div
-									className="login100-form-title"
-									style={{
-										backgroundImage:
-											"url('https://st3.depositphotos.com/4278403/18160/v/600/depositphotos_181606830-stock-video-green-lock-icon-form-green.jpg')",
-									}}
-								>
-									<span className="login100-form-title-1"> Sign In </span>
-								</div>
-							</div>
-							<div className="foo">
-								<div className="wrap-input100 validate-input m-b-26">
-									<span className="label-input100">Username</span>
-									<input
-										type="text"
-										className="input100 has-val"
-										placeholder="Enter Username"
-										onChange={this.handleUserNameInput}
-									/>
-									<span className="focus-input100" />
-								</div>
-								<div className="wrap-input100 validate-input m-b-18">
-									<span className="label-input100">Password </span>
-									<input
-										type="password"
-										className="input100"
-										placeholder="Enter Password"
-										onChange={this.handlePasswordInput}
-									/>
-									<span className="focus-input100" />
-								</div>
 
-								<div className="container-login100-form-btn">
-									<button className="login100-form-btn" onClick={this.handleLoginClick}>
-										Login
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+			<div className='login-form'>
+				<style>{`
+					body > div,
+					body > div > div,
+					body > div > div > div.login-form {
+					height: 100%;
+					}
+				`}
+				</style>
+				<Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+					<Grid.Column style={{ maxWidth: 450 }}>
+						<Header as='h2' color='teal' textAlign='center'>
+						  <img style={{ width: 353 }} src={LOGO} alt="computer-exchange_logo" /> 
+                        </Header>
+						<Form size='large' onSubmit={this.handleSubmit}>
+							<Segment stacked>
+								<Form.Input  name="username" 
+									fluid icon='user'
+									iconPosition='left'
+									placeholder='Email address'
+                                    error = {usernameError}
+									onChange={this.handleChange} />
+								<Form.Input
+									fluid
+									icon='lock'
+									iconPosition='left'
+									placeholder='Password'
+									type='password'
+									name='password'
+									onChange={this.handleChange} 
+									error={passwordError}
+								 />
+								<Button color='blue' fluid size='large'>
+									Login
+                                </Button>
+							</Segment>
+						</Form>
+						{submitted && usernameErrorText &&(
+                           <Message
+						   error
+						   header='Error'
+						   content={usernameErrorText} />						
+						) }
+						
+						{submitted && passwordErrorText && (                           
+						    <Message
+							error
+							header='Error'
+							content={passwordErrorText} />						 
+						) }
+						{submitted && successText &&(
+							 <Message
+							 success
+							 header='Success'
+							 content={successText} />
+						) }
+					</Grid.Column>
+				</Grid>
 			</div>
+
+			
 		);
 	}
 }

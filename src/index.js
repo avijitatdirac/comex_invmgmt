@@ -25,11 +25,11 @@ function LandingPage(props) {
 	return <Login />;
 }
 
-ReactDOM.render(
+/*ReactDOM.render(
 	// Try changing to isLoggedIn={true}:
 	<LandingPage isLoggedIn={false} />,
 	document.getElementById('root')
-);
+);*/
 
-//ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();
