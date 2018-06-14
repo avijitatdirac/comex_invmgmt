@@ -39,6 +39,8 @@ class Login extends Component {
 
 
 		let user = {username:'admin'
+
+		
 	   }
 		this.setState({
 			isLoggedIn: true,
