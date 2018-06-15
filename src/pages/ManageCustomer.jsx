@@ -1,8 +1,6 @@
-import Moment from "react-moment"
 import React, { Component } from "react";
-import { Radio, Menu, Dimmer, Loader, Container, Image, Checkbox, Dropdown, Divider, Button, Form, Table, Modal, Input, Icon, Step, Header, Sidebar, Segment, FormGroup, Label, Grid, GridColumn, Card } from "semantic-ui-react";
-
-
+import {  Dimmer, Loader,  Divider, Button, Form, Table,  Icon,  Segment,  Label,  } from "semantic-ui-react";
+import {notify} from '../Classes';
 class ManageCustomer extends Component
 {
 
@@ -346,18 +344,21 @@ class ManageCustomer extends Component
         {method:'POST'})
         .then(r => r.json())
         .then(data => {
+          notify.success('Customer data successfully !')
           this.setState({
             dimmerActive:false
           })
         })
         .catch(err => {console.log(err)
           this.setState({dimmerActive: false,})
+          notify.error('Error on updating Customer !')
         }
         )
       }
 
       renderCustomerTable ()
       {
+        let i =1;
           return(
               <div>
         <Label as='a' color='violet' ><Icon name="pin"/>Customer Address Details</Label>
@@ -365,31 +366,34 @@ class ManageCustomer extends Component
             <Table.Header>
                 <Table.Row>
                     {this.state.tableHeaders.map(label => (
-                        <Table.HeaderCell key={label}>{label}</Table.HeaderCell>
+                       
+                        <Table.HeaderCell key={label+'hh'}>{label}</Table.HeaderCell>
                     ))}
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-            {this.state.tableAddressDetails.map((obj,idx) => {
+            {  this.state.tableAddressDetails.map((obj,idx) => {
                // console.log(obj)
+                i++;
                 if(obj.Customer_Id===this.state.selectedCustomerId)
-                {
+                { 
+                    
                     return(
                         <Table.Row
-                            key={obj.Customer_Id}
+                            key={obj.Customer_Id+'pointer'+i}
                             style={{ cursor: "pointer" }}
                             >
                             <Table.Cell>
-                            <Form.Input  value={obj.Address} readOnly/>     
+                              {obj.Address}     
                             </Table.Cell>
                             <Table.Cell>
-                            <Form.Input  value={obj.City} readOnly/>     
+                              {obj.City}    
                             </Table.Cell>
                             <Table.Cell>
-                            <Form.Input  value={obj.State} readOnly/>     
+                             {obj.State}   
                             </Table.Cell>
                             <Table.Cell>
-                            <Form.Input  value={obj.Pincode} readOnly/>     
+                            {obj.Pincode}   
                             </Table.Cell>
                             <Table.Cell>
                             <Form.Input  value={obj.GST_Value} onChange={this.changeGST(idx)}/>     
@@ -486,7 +490,7 @@ class ManageCustomer extends Component
 
     render()
     {
-        //console.log(this.state)
+     
         const { dimmerActive } = this.state
         return (
             <Segment>
@@ -526,13 +530,13 @@ class ManageCustomer extends Component
                 <div>
                 <Label as='a' color='violet' ><Icon name="user"/>Customer Details</Label>
                 <Form>
-                <Form.Group>
-                <Form.Input label="Name" value={this.state.customerName} onChange={this.nameChange}/>    
-                <Form.Input label="Pan Number(Read Only)" value={this.state.customerPanNumber}  readOnly/>
-                <Form.Input label="Customer CIN(Read Only)" value={this.state.customerCinNumber}  readOnly/>      
-                <Form.Input label="Previous Name(Read Only)" value={this.state.previousName}   readOnly/>     
-                <Form.Input label="Comments"  onChange={this.commentsChange}/>     
-                </Form.Group>
+                  <Form.Group>
+                  <Form.Input label="Name" value={this.state.customerName} onChange={this.nameChange}/>    
+                  <Form.Input  label="Pan Number" value={this.state.customerPanNumber}  readOnly/>
+                  <Form.Input label="Customer CIN" value={this.state.customerCinNumber}  readOnly/>      
+                  <Form.Input label="Previous Name" value={this.state.previousName}   readOnly/>     
+                  <Form.Input label="Comments"  onChange={this.commentsChange}/>     
+                  </Form.Group>
                 </Form>
                 </div>
                 <div style={{width: "100%",overflowX: "auto",overflowY:"hidden"}} >

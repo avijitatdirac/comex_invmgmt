@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Link, Redirect, withRouter  } from 'react-router-dom';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
 import './css/index.css';
 import './css/main.css';
 import LOGO from "./assets/ce_logo.gif";
 import {validation} from './Classes'
-import App from './App';
 import { history } from "./_helpers";
 class Login extends Component {
 
@@ -65,7 +62,7 @@ handleChange(e) {
 			history.push('/dashboard');
 			this.setState({successText:validation.messages().loginSuccess+ 'kalkk' });
 		}else if(username == 'user@yopmail.com' && password =='87654321'){
-			localStorage.setItem('user',JSON.stringify({username:'sanjeet@yopmail.com',username:'sanjeet', role:'user',branch:'Pune'}))
+			localStorage.setItem('user',JSON.stringify({username:'user@yopmail.com',username:'sanjeet', role:'user',branch:'Pune'}))
 			localStorage.setItem("token",'trerergtbfvfkdhbdfnvksfhksfhsfnsfskfsfjs');
 			history.push('/dashboard')
 			this.setState({successText:validation.messages().loginSuccess });

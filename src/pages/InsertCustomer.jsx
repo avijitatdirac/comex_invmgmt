@@ -58,11 +58,30 @@ class InsertCustomer extends Component
 
     componentWillMount()
     {
+      /*fetch(`/get_customer_roles`,{ method: 'GET' })
+		.then(r => r.json())
+		.then(data => {
+            console.log(data)
+            var rolelist= new Array()
+                data.customerRoles.forEach(role => {
+                  rolelist=rolelist.concat({	
+                    key: role.customer_role_id, 
+                    value: role.customer_role_name, 
+                    text: role.customer_role_name						
+                            })                    
+                  })               
+            this.setState({
+                customerRoles:rolelist
+            })
+		})
+        .catch(err => console.log(err))*/
+    }
+    componentDidMount(){
       fetch(`/get_customer_roles`,{ method: 'GET' })
 		.then(r => r.json())
 		.then(data => {
             console.log(data)
-            var rolelist=[' ']
+            var rolelist= new Array()
                 data.customerRoles.forEach(role => {
                   rolelist=rolelist.concat({	
                     key: role.customer_role_id, 
@@ -76,7 +95,6 @@ class InsertCustomer extends Component
 		})
         .catch(err => console.log(err))
     }
-    
 
 
   onChangeName = (event)          => this.setState({ CName: event.target.value });

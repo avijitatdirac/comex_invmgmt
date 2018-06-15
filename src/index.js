@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import Login from './Login';
 // import registerServiceWorker from './registerServiceWorker';
-
+import { history } from "./_helpers";
 const fakeAuth = {
 	isAuthenticated: false,
 	authenticate(cb) {
@@ -33,3 +33,17 @@ function LandingPage(props) {
 
 ReactDOM.render(<App />, document.getElementById('root'));
 // registerServiceWorker();
+/*(function(seconds) {
+    var refresh,       
+        intvrefresh = function() {
+			
+            clearInterval(refresh);
+            refresh = setTimeout(function() {
+              history.push('/login')
+            }, seconds * 1000);
+        };
+
+    window.document.addEventListener('keypress click', function() { intvrefresh() });
+    intvrefresh();
+
+}(30));*/

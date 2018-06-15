@@ -5,12 +5,17 @@ import '../../App.css';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../../components/Header';
 import SideMenu from '../../components/SideMenu';
+import {  ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class DefaultLayout extends Component {
+
   render() {
     return (
 			<React.Fragment>
 				<Header />
+          
+        <ToastContainer autoClose={8000} />
 				<div id="outer-container">
 					<SideMenu />
 					<div id="page-wrap">
@@ -27,7 +32,8 @@ class DefaultLayout extends Component {
                 </Switch>
 						</BrowserRouter>
 					</div>
-				</div>
+				</div>         
+       
 			</React.Fragment>
 		);
   }
