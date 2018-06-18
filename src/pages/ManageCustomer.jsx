@@ -19,7 +19,7 @@ class ManageCustomer extends Component
             customerCinNumber:'',
             previousName:'',
             comments:'',
-            tableHeaders:["Address(Read Only)","City(Read Only)","State(Read Only)","Pincode(Read Only)","GST Value","Main Contact Person","Main Contact Number","Main Email","Valid Contact Person","Contact Person","Contact Number","Email","Valid Contact Person","Contact Person","Contact Number","Email","Valid Contact Person","Contact Person","Contact Number","Email","Valid Contact Person","Main Address","Valid Address","SEZ"]
+            tableHeaders:["Address","City","State","Pincode","GST Value","Main Contact Person","Main Contact Number","Main Email","Valid Contact Person","Contact Person","Contact Number","Email","Valid Contact Person","Contact Person","Contact Number","Email","Valid Contact Person","Contact Person","Contact Number","Email","Valid Contact Person","Main Address","Valid Address","SEZ"]
         }
     }
 

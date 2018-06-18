@@ -2,30 +2,18 @@ import Moment from 'react-moment';
 import React, { Component } from 'react';
 import {
 	Radio,
-	Menu,
 	Dimmer,
 	Loader,
-	Container,
-	Image,
-	Checkbox,
 	Dropdown,
 	Divider,
 	Button,
 	Form,
 	Table,
-	Modal,
-	Input,
 	Icon,
-	Step,
-	Header,
-	Sidebar,
-	Segment,
-	FormGroup,
-	Label,
-	Grid,
-	GridColumn,
-	Card,
-	FormRadio,
+	Header,	
+	Segment,	
+	Label,	
+	FormRadio
 } from 'semantic-ui-react';
 //import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 /*TO DO
@@ -81,12 +69,7 @@ class ReturnAssets extends Component {
 			damageList: [],
 			tableHeaders: [
 				'Returned Proper',
-				'Returned Damaged',
-				'Name',
-				'Previous Name',
-				'Contact Number',
-				'Email',
-				'Address',
+				'Returned Damaged',				
 				'Serial Number',
 				'Asset',
 				'Asset Id',
@@ -95,6 +78,13 @@ class ReturnAssets extends Component {
 				'Return Date',
 				'Unit Cost',
 				'Comments',
+			],
+			CustomerInfotableHeaders: [				
+				'Name',	
+				'Previous Name',			
+				'Contact Number',
+				'Email',
+				'Address',				
 			],
 			tableData: [
 				{
@@ -544,7 +534,7 @@ class ReturnAssets extends Component {
 					</Label>
 					<Table color="teal" striped>
 						<Table.Header>
-							<Table.Row>
+							<Table.Row   key="tableHeaders">
 								{this.state.tableHeaders.map(label => (
 									<Table.HeaderCell key={label}>{label}</Table.HeaderCell>
 								))}
@@ -553,46 +543,43 @@ class ReturnAssets extends Component {
 						<Table.Body>
 							{this.state.tableData.map((obj, idx) => (
 								<Table.Row key={obj.assetid} style={{ cursor: 'pointer' }}>
-									<Table.Cell>
-										{/* {<FormRadio style={{backgroundColor:'white'}}
-                        onClick={this.checkedAssetsProper.bind(this,obj.assetid,obj)}/>
-                        } */}
-										<Form.Field>
-											<Radio
+									<Table.Cell key={obj.assetid+'thisCell'} >
+										{<FormRadio style={{backgroundColor:'white'}}
+                        onClick={this.checkedAssetsProper.bind(this,obj.assetid,obj)}/>}
+                         
+										{/*<Form.Field>
+											<Radio key={obj.assetid+'this'}
 												label=""
 												name="radioGroup"
 												value="this"
-												checked={this.checkedAssetsProper.bind(this,obj.assetid,obj)}
+												checked={this.state.value === 'this'}
 												onChange={this.handleChange}
+												onClick={this.checkedAssetsProper.bind(this,obj.assetid,obj)}
 											/>
-										</Form.Field>
+										</Form.Field>*/}
 									</Table.Cell>
-									<Table.Cell>
-										{/* {<FormRadio style={{backgroundColor:'white'}}
-                            onClick={this.checkedAssetsDamaged.bind(this,obj.assetid,obj)}/>
-                        } */}{' '}
-										<Form.Field>
-											<Radio
+									<Table.Cell key={obj.assetid+'thatChel'}>
+									{<FormRadio style={{backgroundColor:'white'}}
+                            onClick={this.checkedAssetsDamaged.bind(this,obj.assetid,obj)}/>}
+                        
+										{/*<Form.Field>										
+											<Radio key={obj.assetid+'that'}
 												label=""
 												name="radioGroup"
 												value="that"
-												checked={this.checkedAssetsDamaged.bind(this,obj.assetid,obj)}
+												checked={this.state.value === 'that'}
 												onChange={this.handleChange}
+												onClick={this.checkedAssetsDamaged.bind(this,obj.assetid,obj)}
 											/>
-										</Form.Field>
-									</Table.Cell>
-									<Table.Cell>{this.state.customerName}</Table.Cell>
-									<Table.Cell>{this.state.previousName}</Table.Cell>
-									<Table.Cell>{obj.contactno}</Table.Cell>
-									<Table.Cell>{obj.email}</Table.Cell>
-									<Table.Cell>{obj.address}</Table.Cell>
-									<Table.Cell>{obj.serialnumber}</Table.Cell>
-									<Table.Cell>{obj.asset}</Table.Cell>
-									<Table.Cell>{obj.assetid}</Table.Cell>
-									<Table.Cell>{obj.assettype}</Table.Cell>
-									<Table.Cell>{obj.orderdate}</Table.Cell>
-									<Table.Cell>{obj.returndate}</Table.Cell>
-									<Table.Cell>{obj.unitcost}</Table.Cell>
+										</Form.Field> */}
+									</Table.Cell>									
+									<Table.Cell key={obj.serialnumber}>{obj.serialnumber}</Table.Cell>
+									<Table.Cell key={obj.asset}>{obj.asset}</Table.Cell>
+									<Table.Cell key={obj.assetid}>{obj.assetid}</Table.Cell>
+									<Table.Cell key={obj.assettype}>{obj.assettype}</Table.Cell>
+									<Table.Cell key={obj.orderdate}>{obj.orderdate}</Table.Cell>
+									<Table.Cell key={obj.returndate}>{obj.returndate}</Table.Cell>
+									<Table.Cell key={obj.unitcost}>{obj.unitcost}</Table.Cell>
 									<Table.Cell>
 										<Form.Input
 											value={obj.comments}
@@ -610,6 +597,43 @@ class ReturnAssets extends Component {
 							</Button>
 						</center>
 					</div>
+				</Dimmer.Dimmable>
+			</div>
+		);
+	}
+
+	CustomerInfoTable() {
+		var { dimmerActive } = this.state;
+		return (
+			<div>
+				<Dimmer.Dimmable as={Segment} dimmed={dimmerActive}>
+					<Dimmer active={dimmerActive} inverted>
+						<Loader>Loading</Loader>
+					</Dimmer>
+					<Label as="a" color="violet">
+						<Icon name="user" />Customer Information 
+					</Label>
+					<Table color="teal" striped>
+						<Table.Header>
+							<Table.Row>
+								{this.state.CustomerInfotableHeaders.map(label => (
+									<Table.HeaderCell key={label+'custInfo'}>{label}</Table.HeaderCell>
+								))}
+							</Table.Row>
+						</Table.Header>
+						<Table.Body>
+							{this.state.tableData[0]  && 
+							(
+								<Table.Row key={this.state.tableData[0].assetid +'custInfo'} style={{ cursor: 'pointer' }}>	
+									<Table.Cell>{this.state.customerName}</Table.Cell>
+									<Table.Cell>{this.state.previousName}</Table.Cell>								
+									<Table.Cell>{this.state.tableData[0].contactno}</Table.Cell>
+									<Table.Cell>{this.state.tableData[0].email}</Table.Cell>
+									<Table.Cell>{this.state.tableData[0].address}</Table.Cell>	
+								</Table.Row>
+							)}
+						</Table.Body>
+					</Table>					
 				</Dimmer.Dimmable>
 			</div>
 		);
@@ -701,7 +725,9 @@ class ReturnAssets extends Component {
 		}
 	};
 
-    handleChange = (e, { value }) => this.setState({ value })
+	handleChange = (e, { value }) => this.setState({ value })
+	
+	
 
 	checkedAssetsDamaged = (id, obj) => {
 		var counter = 0;
@@ -747,6 +773,9 @@ class ReturnAssets extends Component {
 					/>
 				</div>
 				{this.SerialFilterForm()}
+				<div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden',marginBottom:'10px' }}>
+					{this.state.selectedCustomerId !== '' ? this.CustomerInfoTable() : undefined}
+				</div>				
 				<div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden' }}>
 					{this.state.selectedCustomerId !== '' ? this.renderTable() : undefined}
 				</div>
@@ -774,7 +803,12 @@ class ReturnAssets extends Component {
 						placeholder="Enter Serial Number"
 						options={this.state.assetList}
 					/>
-					<Divider />
+                    
+
+					<div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden' ,marginBottom:'10px' }}>
+						{this.state.assetID ? this.CustomerInfoTable() : undefined}
+					</div>
+					
 					<div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden' }}>
 						{this.state.assetID ? this.renderAssetTable() : undefined}
 					</div>
@@ -803,7 +837,10 @@ class ReturnAssets extends Component {
 						placeholder="Enter Serial Number"
 						options={this.state.damageList}
 					/>
-					<Divider />
+					
+					<div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden',marginBottom:'10px' }}>
+						{this.state.damageId ? this.CustomerInfoTable() : undefined}
+					</div>				
 					<div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden' }}>
 						{this.state.damageId ? this.renderDamageTable() : undefined}
 					</div>
@@ -824,7 +861,7 @@ class ReturnAssets extends Component {
 		return (
 			<div className="field">
 				<label>Category:</label>
-				<Form>
+				<Form key="renderCategoryDropdown">
 					<Form.Group widths="equal">
 						<Form.Select
 							onChange={(e, data) =>
@@ -848,7 +885,7 @@ class ReturnAssets extends Component {
 				<Icon name="filter" />
 				<Header.Content>Filter By Serial Number:</Header.Content>
 			</Header>
-			<Form>
+			<Form key="SerialFilterForm">
 				<Form.Input
 					width={4}
 					label="Serial Number"
@@ -859,13 +896,13 @@ class ReturnAssets extends Component {
 				<Divider />
 				{this.renderCategoryDropdown()}
 				<div>
-					{this.state.selectedCategory === '' ? (
+					{/*this.state.selectedCategory === '' ? (
 						<Label basic color="red" pointing>
 							Please enter a valid Asset Type
 						</Label>
 					) : (
 						undefined
-					)}
+					)*/}
 				</div>
 			</Form>
 		</Segment>

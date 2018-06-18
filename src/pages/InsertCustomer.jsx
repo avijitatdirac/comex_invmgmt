@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Form, Icon, Button,Segment,Divider,Input,Header } from 'semantic-ui-react'
-
+import { Form, Icon, Button,Segment,Divider,Input,Header,Transition } from 'semantic-ui-react'
+import {notify} from '../Classes';
 class InsertCustomer extends Component
 {
 
@@ -13,7 +13,7 @@ class InsertCustomer extends Component
             Comments:"",
             Cin:"",
             customerRoles:[],
-
+            visibleRol1:false,
             CNameError: false,
             PincodeError: false,
             PanNumberError:false,
@@ -54,47 +54,33 @@ class InsertCustomer extends Component
             }]
 
         }
+        // preserve the initial state in a new object
+        this.baseState = this.state
     }
 
     componentWillMount()
     {
-      /*fetch(`/get_customer_roles`,{ method: 'GET' })
-		.then(r => r.json())
-		.then(data => {
-            console.log(data)
-            var rolelist= new Array()
-                data.customerRoles.forEach(role => {
-                  rolelist=rolelist.concat({	
-                    key: role.customer_role_id, 
-                    value: role.customer_role_name, 
-                    text: role.customer_role_name						
-                            })                    
-                  })               
-            this.setState({
-                customerRoles:rolelist
-            })
-		})
-        .catch(err => console.log(err))*/
-    }
-    componentDidMount(){
       fetch(`/get_customer_roles`,{ method: 'GET' })
-		.then(r => r.json())
-		.then(data => {
-            console.log(data)
-            var rolelist= new Array()
-                data.customerRoles.forEach(role => {
-                  rolelist=rolelist.concat({	
-                    key: role.customer_role_id, 
-                    value: role.customer_role_name, 
-                    text: role.customer_role_name						
-                            })                    
-                  })               
-            this.setState({
-                customerRoles:rolelist
-            })
-		})
-        .catch(err => console.log(err))
-    }
+      .then(r => r.json())
+      .then(data => {
+              console.log(data)
+              var rolelist= new Array()
+                  data.customerRoles.forEach(role => {
+                    rolelist=rolelist.concat({	
+                      key: role.customer_role_id, 
+                      value: role.customer_role_name, 
+                      text: role.customer_role_name						
+                              })                    
+                    })               
+              this.setState({
+                  customerRoles:rolelist,
+                  visibleRol1:true
+              })
+      })
+          .catch(err => console.log(err))
+      }
+
+    
 
 
   onChangeName = (event)          => this.setState({ CName: event.target.value });
@@ -107,7 +93,7 @@ class InsertCustomer extends Component
 
   handleCustomerSubmission = () => 
   {
-
+    var aerror,perror,gerror,cperror,cnerror,eerror
     var l=this.state.customerAddress.length-1;
     if(this.state.customerAddress[l].Address === '' ||
     this.state.customerAddress[l].Pincode.length!==6 || !/^\d+$/.test(this.state.customerAddress[l].Pincode) ||
@@ -117,7 +103,35 @@ class InsertCustomer extends Component
     !/^\d+$/.test(this.state.customerAddress[l].ContactNumber1) ||
     this.state.customerAddress[l].Email1 === '' || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.customerAddress[l].Email1)
     )
-    alert("Please Enter relevant Address Data. Press 'Add More' to Check where the Problem is")
+    //alert("Please Enter relevant Address Data. Press 'Add More' to Check where the Problem is")
+    {
+      if(this.state.customerAddress[l].Address === '')
+      // alert("Please Enter valid Address")
+       aerror=true
+       if(this.state.customerAddress[l].Pincode.length!==6 || !/^\d+$/.test(this.state.customerAddress[l].Pincode))
+       perror=true
+       if(this.state.customerAddress[l].GSTValue ==='')
+       //alert("Please Enter valid GST Address")
+       gerror=true
+       if(this.state.customerAddress[l].ContactPerson1 === '' || !/^[a-zA-Z\s]*$/.test(this.state.customerAddress[l].ContactPerson1))
+       //alert("Please Enter valid name")
+       cperror=true
+       if((this.state.customerAddress[l].ContactNumber1.length!==8 && this.state.customerAddress[l].ContactNumber1.length!==10) ||
+       !/^\d+$/.test(this.state.customerAddress[l].ContactNumber1))
+       //alert("Please Enter a valid Main Contact Number")
+       cnerror=true
+       if(this.state.customerAddress[l].Email1 === '' || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.customerAddress[l].Email1))
+       //alert("Please Enter a valid Main Email")
+       eerror=true
+       this.setState({
+        addressError:aerror,
+        PincodeError:perror,
+        gstError:gerror,
+        contactPersonError:cperror,
+        contactNumberError:cnerror,
+        emailError:eerror
+      })
+    }
     else
    {
 
@@ -131,9 +145,10 @@ class InsertCustomer extends Component
       errorCName = false
     }
     var cinNumberError=false;
-    if(this.state.Cin.length< 21) 
+    if(this.state.Cin.length < 21) 
     {
       cinNumberError=true
+      notify.error('Customer CIN should be greater than 20 characters!')
     } 
 
     var errorPanNumber=true;
@@ -155,14 +170,17 @@ class InsertCustomer extends Component
         CName:scname,
         CNameError: errorCName,
         PanNumberError:errorPanNumber,
-        cinError:cinNumberError,
-        formSubmitSuccess:submitSuccess,
+        cinError:cinNumberError,       
         customerAddress:this.state.customerAddress
     },this.commitCustomer)
 
   }
   
 
+  }
+
+  resetForm = () => {
+    this.setState(this.baseState)
   }
 
   commitCustomer = () =>
@@ -173,18 +191,20 @@ class InsertCustomer extends Component
         &&
         !this.state.cinError
     )
-    {
-        //console.log(JSON.stringify(this.state))
+    {        
         fetch(`/insert_customer?cin=${this.state.Cin}&customer_name=${this.state.CName}&pan_number=${this.state.PanNumber}&comments=${this.state.Comments}&address=${JSON.stringify(this.state.customerAddress, null, 2)}`,
         {method:'POST'})
         .then(r => r.json())
         .then(data => {
+          this.resetForm();
+          notify.successBottom("Customer details have been entered");
+          this.setState({ formSubmitSuccess:true,});
         })
         .catch(err => console.log(err))
     }
     else
     {
-        alert("Please check your fields!!!There seems to be a problem")
+        notify.errorBottom("Please check your fields!!!There seems to be a problem");
 
     }
   }
@@ -350,38 +370,49 @@ class InsertCustomer extends Component
     this.setState({ customerAddress: Email });
   }
 
-  handleCustomerRoleChange1 = (idx) => (evt) => {
-    
+  /*handleCustomerRoleChange1 = (idx) => (evt) => {
+      // alert(evt.target.value)
     console.log('handleCustomerRoleChange1= '+evt.target.value);
+    console.log(evt ,'IDX= ' +idx);
     const CustomerRole = this.state.customerAddress.map((attribute, sidx) => {
       if (idx !== sidx) return attribute;      
       return { ...attribute, id: idx, ContactRole1: evt.target.value,};
     });
+   // console.log('CustomerRole',CustomerRole);
     this.setState({ customerAddress: CustomerRole });
-    console.log
+    //console.warm(CustomerRole)
     
-  }
-  handleCustomerRoleChange2 = (idx) => (evt) => {
+  }*/
+
+  handleCustomerRoleChange1 = (idx,dataValue)  => {  
+  const CustomerRole = this.state.customerAddress.map((attribute, sidx) => {
+    if (idx !== sidx) return attribute;      
+    return { ...attribute, id: idx, ContactRole1: dataValue,};
+  }); 
+  this.setState({ customerAddress: CustomerRole });
+}
+
+
+  handleCustomerRoleChange2 =  (idx,dataValue) => {
     
     const CustomerRole = this.state.customerAddress.map((attribute, sidx) => {
       if (idx !== sidx) return attribute;
-      return { ...attribute, id: idx, ContactRole2: evt.target.value,};
+      return { ...attribute, id: idx, ContactRole2: dataValue,};
     });
     this.setState({ customerAddress: CustomerRole });
   }
-  handleCustomerRoleChange3 = (idx) => (evt) => {
+  handleCustomerRoleChange3 = (idx,dataValue) => {
     
     const CustomerRole = this.state.customerAddress.map((attribute, sidx) => {
       if (idx !== sidx) return attribute;
-      return { ...attribute, id: idx, ContactRole3: evt.target.value,};
+      return { ...attribute, id: idx, ContactRole3: dataValue,};
     });
     this.setState({ customerAddress: CustomerRole });
   }
-  handleCustomerRoleChange4 = (idx) => (evt) => {
-    
+  handleCustomerRoleChange4 = (idx,dataValue) => {    
     const CustomerRole = this.state.customerAddress.map((attribute, sidx) => {
       if (idx !== sidx) return attribute;
-      return { ...attribute, id: idx, ContactRole4: evt.target.value,};
+      return { ...attribute, id: idx, ContactRole4: dataValue,};
     });
     this.setState({ customerAddress: CustomerRole });
   }
@@ -523,7 +554,7 @@ class InsertCustomer extends Component
 
            if(this.state.contactNumberError)
            {
-            contactnumberrender = <div className="ui red left pointing basic label">Please enter a valid Contact Number</div>
+            contactnumberrender = <div className="ui red basic pointing basic label">Please enter a valid Contact Number</div>
            }
            else
            contactnumberrender=undefined
@@ -537,11 +568,11 @@ class InsertCustomer extends Component
 
            if(this.state.emailError)
            {
-            emailrender = <div className="ui red left pointing basic label">Please enter a valid Email</div>
+            emailrender = <div className="ui red basic pointing basic label">Please enter a valid Email</div>
            }
            if(this.state.roleError)
            {
-            rolerender = <div className="ui red left pointing basic label">Please select a valid Role</div>
+            rolerender = <div className="ui red basic pointing basic label">Please select a valid Role</div>
            }
            else
            rolerender=undefined
@@ -550,7 +581,7 @@ class InsertCustomer extends Component
                 <div>
                 {this.state.customerAddress.map((attribute, idx) => {return(
 
-                    <Form>
+                    <Form key={idx + 1}>
                     <Form.TextArea label={`Address #${idx + 1}`} value={attribute.Address} placeholder='Enter Address' onChange={this.handleCustomerAddressChange(idx)} />
                     {(idx===this.state.customerAddress.length-1)
                     ?
@@ -582,38 +613,54 @@ class InsertCustomer extends Component
                     undefined
                     }
                     <Form.Group>
-                    <Form.Input icon='star' color='red' value={attribute.ContactPerson1} fluid label='Main Contact Person' width={8} placeholder='Enter Contact Person' onChange={this.handleCustomerContactPersonNameChange1(idx)} />
-                    {(idx===this.state.customerAddress.length-1)
-                    ?
-                    contactpersonrender
-                    :
-                    undefined
-                    }
-                    <Form.Input  label='Main Contact Number' value={attribute.ContactNumber1} icon='star' placeholder='Enter Contact Number' onChange={this.handleCustomerContactChange1(idx)} />
-                    {(idx===this.state.customerAddress.length-1)
-                    ?
-                    contactnumberrender
-                    :
-                    undefined
-                    }
-                     <Form.Input  label='Main Email' icon='star' value={attribute.Email1} placeholder='Enter Email' onChange={this.handleCustomerEmailChange1(idx)} />
-                    {(idx===this.state.customerAddress.length-1)
-                    ?
-                    emailrender
-                    :
-                    undefined
-                    }
-                    <Form.Select
-                    onChange={this.handleCustomerRoleChange1(idx)}
-                    value={attribute.ContactRole1}
-                    size="small"
-                    label="Branch"
-                    style={{ maxWidth: "400px" }}
-                    placeholder="Select Branch"
-                    options={this.state.customerRoles} 
-                />
+                  
+                        <Form.Input  icon='star' color='red' value={attribute.ContactPerson1} fluid label='Main Contact Person' width={8} placeholder='Enter Contact Person' onChange={this.handleCustomerContactPersonNameChange1(idx)} />
+                        
+                        {(idx===this.state.customerAddress.length-1)
+                        ?
+                        contactpersonrender
+                        :
+                        undefined
+                        }
+                      
+                    <div>
+                      <Form.Input  label='Main Contact Number' value={attribute.ContactNumber1} icon='star' placeholder='Enter Contact Number' onChange={this.handleCustomerContactChange1(idx)} />
+                      {(idx===this.state.customerAddress.length-1)
+                      ?
+                      contactnumberrender
+                      :
+                      undefined
+                      }
+                   </div>
+                   <div>
+                      <Form.Input  label='Main Email' icon='star' value={attribute.Email1} placeholder='Enter Email' onChange={this.handleCustomerEmailChange1(idx)} />
+                      {(idx===this.state.customerAddress.length-1)
+                      ?
+                      emailrender
+                      :
+                      undefined
+                      }
+                    </div>
+                    { this.state.visibleRol1 &&(
+                      
+                        <Form.Select
+                        onChange={(e,data)=>{
+                          this.handleCustomerRoleChange1(idx ,data.value)
+                        } }
+                        value={attribute.ContactRole1}
+                        size="small"
+                        label="Branch"
+                        style={{ maxWidth: "400px" }}
+                        placeholder="Select Branch"
+                        options={this.state.customerRoles}  />
+                       
+                    ) }                     
+
+                    <Divider />
 
                     </Form.Group>
+
+
                     <Divider/>
                     <Header>Alternate Contact Information</Header>
                     <Form.Group>
@@ -630,7 +677,11 @@ class InsertCustomer extends Component
                           value={attribute.ContactRole2}
                           //placeholder="Select a Role"
                           options={this.state.customerRoles}
-                          onChange={this.handleCustomerRoleChange2(idx)} 
+                          onChange={(e,data)=>{
+
+                            this.handleCustomerRoleChange2(idx ,data.value)
+                          } }
+                         
                     />
                     </Form.Group>
                     <Form.Group >
@@ -647,7 +698,9 @@ class InsertCustomer extends Component
                           value={attribute.ContactRole3}
                           //placeholder="Select a Role"
                           options={this.state.customerRoles}
-                          onChange={this.handleCustomerRoleChange3(idx)} 
+                          onChange={(e,data)=>{
+                            this.handleCustomerRoleChange3(idx ,data.value)
+                          } } 
                     />
                     </Form.Group>
                     <Form.Group >
@@ -663,8 +716,10 @@ class InsertCustomer extends Component
 						              search
                           value={attribute.ContactRole4}
                           //placeholder="Select a Role"
-                          options={this.state.customerRoles}
-                          onChange={this.handleCustomerRoleChange4(idx)} 
+                          options={this.state.customerRoles}                         
+                          onChange={(e,data)=>{
+                            this.handleCustomerRoleChange4(idx ,data.value)
+                          } }
                     />
                     </Form.Group>
                     <Form.Group >
