@@ -7,19 +7,22 @@ import Header from '../../components/Header';
 import SideMenu from '../../components/SideMenu';
 import {  ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import MainMenu from '../../components/Menu'
 class DefaultLayout extends Component {
 
   render() {
     return (
 			<React.Fragment>
 				<Header />
-          
+        <div style={{marginTop:'-2px', "margin-top": "-2px !important"}}>
+          <MainMenu   />
+        </div>
+        
         <ToastContainer autoClose={8000} />
 				<div id="outer-container">
 					<SideMenu />
 					<div id="page-wrap">
-						<BrowserRouter>
+					
               <Switch>
                   {routes.map((route, idx) => {
                       return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
@@ -30,7 +33,7 @@ class DefaultLayout extends Component {
                   )}
                   <Redirect from="/" to="/dashboard" />
                 </Switch>
-						</BrowserRouter>
+						
 					</div>
 				</div>         
        

@@ -15,6 +15,7 @@ import {
 	Label,	
 	FormRadio
 } from 'semantic-ui-react';
+import {notify} from '../Classes';
 //import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 /*TO DO
 Manage Returned from Repair Assets
@@ -24,7 +25,6 @@ var moment = require('moment');
 class ReturnAssets extends Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			damageComments: '',
 			returnedAssetState: true,
@@ -695,8 +695,8 @@ class ReturnAssets extends Component {
 			{ method: 'GET' }
 		)
 			.then(r => r.json())
-			.then(data => {
-				alert('Data Submitted');
+			.then(data => {				
+				notify.success('Data Submitted')
 			})
 			.catch(err => console.log(err));
 	};
@@ -887,9 +887,10 @@ class ReturnAssets extends Component {
 			</Header>
 			<Form key="SerialFilterForm">
 				<Form.Input
-					width={4}
+					
 					label="Serial Number"
 					type="text"
+					style={{ maxWidth: '400px' }}
 					placeholder="Filter by Serial Number"
 					onChange={this.onChangeSerialFilter}
 				/>

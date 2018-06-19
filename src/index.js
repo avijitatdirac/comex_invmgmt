@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import Login from './Login';
 // import registerServiceWorker from './registerServiceWorker';
+import { BrowserRouter } from 'react-router-dom';
 import { history } from "./_helpers";
 const fakeAuth = {
 	isAuthenticated: false,
@@ -31,7 +32,7 @@ function LandingPage(props) {
 	document.getElementById('root')
 );*/
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render( <BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
 // registerServiceWorker();
 /*(function(seconds) {
     var refresh,       

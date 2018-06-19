@@ -955,12 +955,13 @@ class GenerateChallan extends React.Component {
 					<br />
 					<Form>
 						<Form.Group>
-							<Form.Input label="Rent Start Date">
+
+							{/*<Form.Input label="Rent Start Date">
 								<DatePicker  dateFormat="DD/MM/YYYY" 
 								onChange={this.onChangeRentStartDate}
 								selected={moment(this.state.rentStartDate)} 							
 								/>
-							</Form.Input>
+							</Form.Input> 
 	
 							{/* <Form.Select
 								onChange={this.onChangeBranch}
@@ -971,9 +972,12 @@ class GenerateChallan extends React.Component {
 								placeholder="Select Branch"
 								options={branchOptions} 
 							/> */}
+
 						</Form.Group>
 					</Form>
-					{this.renderItemTable()}
+					<div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden',marginBottom:'10px' }}>
+					    {this.renderItemTable()}
+					 </div>  
 					<Form>
 						<Form.Group>
 						<Form.Input label='E-Way Number' placeholder='Enter E-Way Number' width={6}
@@ -1011,7 +1015,7 @@ class GenerateChallan extends React.Component {
 						{(this.state.selectedCustomerId!==null && this.state.selectedLocationId!==null && this.state.selectedChallanType!==null
 						?
 						<Button color="blue" onClick={this.submitChallan}>
-							<Icon name="save" /> Submit
+							<Icon name="save" /> Submit  <Icon name="calendar alternate outline" /> 
 						</Button>
 							:
 							undefined
@@ -1071,14 +1075,17 @@ class GenerateChallan extends React.Component {
 						</Table.Cell>
 						<Table.Cell>{this.calculateCurrentPrice(obj)}</Table.Cell>
 						<Table.Cell>
-						<Form>
-						{/* <Form.Input label="Rent Start Date"> */}
+						
+						 <Form.Input > 
 							<DatePicker  dateFormat="DD/MM/YYYY" 
 								selected={moment(obj.rentEndDate)}
 								onChange={this.onChangeRentEndDate(idx)}
+								size="small"
+								style={{ maxWidth: "200px" ,border:'1px' }}
 							/>
-						{/* </Form.Input> */}
-						</Form>
+							
+						 </Form.Input>
+						
 						</Table.Cell>
 						<Table.Cell>
 							<Form.Select
@@ -1103,7 +1110,7 @@ class GenerateChallan extends React.Component {
 								options={taxOptions} />
 						</Table.Cell>
 						<Table.Cell><Input value={obj.gst} onChange={this.onChangeGst(idx)} small/></Table.Cell>
-						<Table.Cell>{(obj.totalPrice!==undefined ? <div>₹{obj.totalPrice}</div> : <div>₹0</div>)}</Table.Cell>
+						<Table.Cell> { '   '}{(obj.totalPrice!==undefined ? <div>₹{obj.totalPrice}</div> : <div>₹0</div>)} {'   '}</Table.Cell>
 					</Table.Row>
 				))}
 			</Table.Body>

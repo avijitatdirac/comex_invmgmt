@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import AssetCard from "../components/DisplayAssetComponents/AssetCard";
 import GenerateChallan from "./GenerateChallan";
 import { Loader, Dimmer, Container, List, Checkbox, Dropdown, Divider, Button, Form, Table, Modal, Input, Icon, Step, Header, Sidebar, Segment, FormGroup, Label, Grid, GridColumn, Card, TableFooter } from "semantic-ui-react";
-  
+import {ReactDOM} from 'react-dom'  
   
       
 // card group
@@ -114,6 +114,11 @@ class DisplayAssets extends Component {
 
 	componentDidMount=()=>{
 		console.log(this.state.selectedCategory)
+		let user = JSON.parse(localStorage.getItem('user'));
+		setTimeout(() => {
+			this.setState({selectedBranch:user.branch})
+		}, 200);
+         
 	}
     // database operations
   	componentWillMount = () => {
@@ -213,7 +218,7 @@ class DisplayAssets extends Component {
 				<Icon
 					name="close"
 					size="large"
-					style={{ cursor: "pointer", marginLeft: "5px" }}
+					style={{ cursor: "pointer", marginLeft: "5px" ,marginRight: "29px" }}
 					onClick={this.closeSidebar}
 				/>
 				<Header
@@ -257,7 +262,7 @@ class DisplayAssets extends Component {
 							paddingBottom: "15px",
 							borderBottom: "1px solid rgba(255, 255, 255, 0.3)"
 						}}>
-							<Icon name="desktop" size="large" style={{ marginRight: "10px", marginRight: "10px" }} />
+							<Icon name="desktop" size="large" style={{ 'margin-right':"29px", marginRight: "29px" }} />
 							<div style={{ flex: 1 }}>
 								<h3 style={{ margin: 0 }}>{`${obj.make}`}</h3>
 								<ul style={{ margin: 0 }}>
@@ -530,7 +535,9 @@ class DisplayAssets extends Component {
                     label='Filter by Serial Number'
                     type="text"
                     placeholder="Filter by Serial Number"
-                    onChange={this.onChangeSerialFilter}
+					onChange={this.onChangeSerialFilter}
+					style={{ maxWidth: "400px" }}
+					size="small"
                 />
 			</Form.Group>
 			</Form>
@@ -1010,6 +1017,7 @@ class DisplayAssets extends Component {
 	 */
 	onCheckout = () => {
 		this.setState({isCheckedOut: true},);
+	
 	}
 
 	filterSerialResult = () => {

@@ -10,7 +10,6 @@ const AddAsset = Loadable({
   loading: Loading,
 });
 
-
 const Dashboard = Loadable({
   loader: () => import('./pages/Dashboard'),
   loading: Loading,
@@ -66,7 +65,7 @@ const ChallanDraft = Loadable({
 
 const routes = [
   { path: '/', exact: true, name: 'dashboard', component: DefaultLayout },
-  { path: 'addAsset', exact: true, name: 'AddAsset', component: AddAsset },
+  { path: '/addAsset',  name: 'AddAsset', component: AddAsset },
   { path: '/dashboard', name: 'dashboard', component: Dashboard },
   { path: '/home', name: 'dashboard', component: Dashboard },  
   { path: '/addAssetType', name: 'AddAssetType', component: AddAssetType },  
