@@ -4,6 +4,7 @@ import Challan from "../components/Challan"
 import DatePicker from "react-datepicker";
 var moment = require('moment');
 require('react-datepicker/dist/react-datepicker.css');
+import {notify} from '../Classes';
 
 // branch options
 const paymentOptions = [
@@ -350,16 +351,18 @@ class GenerateChallan extends React.Component {
             .then(r => r.json()) 
             .then(data => {
                 if(data.isSuccess) {
-					alert('Updated Draft')  
+					
+					notify.success('Updated Draft');
 					window.location = '/challanDraft'                        
 				} 
 				else {
-                    alert('failed to update draft')
+					
+					notify.error('failed to update draft')
                 }
             })
             .catch(err => {
                 console.log(err)
-                alert('could not save. Error: ',err)
+                notify.error('could not save. Error: ')
             })
         
         } else {
@@ -384,17 +387,18 @@ class GenerateChallan extends React.Component {
                     .then(r => r.json()) 
                     .then(data => {
                         if(data.isSuccess) {
-							alert('Saved as Draft')
+							//alert('Saved as Draft')
+							notify.success('Saved as Draft')
 							window.location = '/challanDraft'                        }
                     })
                     .catch(err => console.log(err))
                 } else {
-                    alert('save failure')
+                    notify.error('save failure')
                 }
             })
             .catch(err => {
                 console.log(err)
-                alert('could not save. Error: ',err)
+                notify.error('could not save. Error: ',err)
             })
         }
         
@@ -421,18 +425,18 @@ class GenerateChallan extends React.Component {
 					.then(r => r.json()) 
 					.then(data => {
 						if(data.isSuccess) {
-							alert('Draft Deleted')
+							notify.success('Draft Deleted')
 							window.location = '/displayAssets'
 						}
 					})
 					.catch(err => console.log(err))
 				} else {
-					alert('failed to delete')
+					notify.error('failed to delete')
 				}
 			})
 			.catch(err => {
 				console.log(err)
-				alert('could not save. Error: ',err)
+				notify.error('could not save. Error: ',err)
 			})
 		// update asset table
 	}
@@ -501,7 +505,7 @@ class GenerateChallan extends React.Component {
 				.then(r => r.json()) 
 				.then(data => {
 					if(data.isSuccess) {
-						alert('Submitted Draft')
+						notify.error('Submitted Draft')
 						this.setState({ printChallan: true })
 					}
 				})
@@ -514,7 +518,7 @@ class GenerateChallan extends React.Component {
 				.then(r => r.json()) 
 				.then(data => {
 					if(data.isSuccess) {
-						alert('Submitted Direct')
+						notify.success('Submitted Direct')
 						this.setState({ printChallan: true })
 					}
 				})	
@@ -545,7 +549,7 @@ class GenerateChallan extends React.Component {
 							.then(r => r.json()) 
 							.then(data => {
 								if(data.isSuccess) {
-									alert('submitted draft')
+									notify.success('submitted draft')
 									this.setState({ printChallan: true })
 									//this.setState({last_challan_number: data.last_challan_number})
 									//console.log("data.last_challan_number ="+data.last_challan_number)
@@ -560,7 +564,7 @@ class GenerateChallan extends React.Component {
 							.then(r => r.json()) 
 							.then(data => {
 								if(data.isSuccess) {
-									alert('submitted after change_inventory_status')
+									notify.success('submitted after change_inventory_status')
 									this.setState({ printChallan: true })
 									console.log('last_challan_number ='+JSON.stringify(data.last_challan_number[0].last_challan))
 									this.setState({last_challan_number:data.last_challan_number[0].last_challan})
