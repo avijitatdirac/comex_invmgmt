@@ -438,10 +438,35 @@
     background-color: #333333;
   }
   
+
+  #page-wrap{padding-top: 110px; padding-bottom: 85px;}
+  #header{width: 100%; position: fixed; left: 0; top: 0; z-index: 99;}
+   #header .topLogo{margin: 0 0 0 35px;}
+  .ui.inverted.menu{border-radius: 0!important;}
+  .ui.inverted.menu a.item{font-family: Arial, Helvetica, sans-serif; font-size: 13px;}
+  #footer{width: 100%; background: #222; margin: 30px 0 0; padding: 5px 0 0; position: fixed; left: 0; bottom: 0;}
+  #footer .inverted.menu{min-height: inherit; background: none; display: flex; justify-content: left; margin: 0; position: relative; left: -6px;}
+  #footer .inverted.menu a{background: none; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #999; padding: 0 8px; line-height: normal;}
+  #footer .inverted.menu a:before{background: #999;}
+  p.copyright-txt{font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #696969; margin: 3px 0 0;}
+  ul.social-link{display: flex; align-items: center; float: right;}
+  ul.social-link li{color: #696969; transition: all 0.3s ease-in; }
+  ul.social-link li a{color: #696969; padding: 0;}
+  ul.social-link li a:hover{color: #999;}
+  ul.social-link li span{font-size: 12px; color: #999;}
+
+  .customNavMenu{position: relative; top: 100px;}
+  .customNavMenu .bm-morph-shape, .customNavMenu .bm-cross-button{display: none;}
+  .customNavMenu .bm-menu{width: 240px!important; background: #1b1c1d; padding: 0; overflow: auto;}
+  .customNavMenu .bm-menu nav a{font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #c7c7c7; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #2b2b2b;}
+  .customNavMenu .bm-menu nav a:hover{background: #000; color: #f4f4f4; }
   
   /*------------------------------------------------------------------
   [ Responsive ]*/
-  
+  @media (max-width: 767px) {
+    #footer .inverted.menu{display: inline;}
+    #footer .inverted.menu a{display: inline-block;}
+  }
   @media (max-width: 576px) {
     .login100-form {
       padding: 43px 15px 57px 117px;

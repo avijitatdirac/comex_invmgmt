@@ -4,7 +4,6 @@ import routes from '../../routes';
 import '../../App.css';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import SideMenu from '../../components/SideMenu';
 import {  ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,9 +14,9 @@ class DefaultLayout extends Component {
     return (
 			<React.Fragment>
 				<Header />
-        {/* <div style={{marginTop:'-2px', "margin-top": "-2px !important"}}>
+        <div style={{marginTop:'-2px', "margin-top": "-2px !important"}}>
           <MainMenu   />
-        </div> */}
+        </div>
         
         <ToastContainer autoClose={8000} />
 				<div id="outer-container">
@@ -37,7 +36,7 @@ class DefaultLayout extends Component {
 						
 					</div>
 				</div>         
-        <Footer />
+       
 			</React.Fragment>
 		);
   }

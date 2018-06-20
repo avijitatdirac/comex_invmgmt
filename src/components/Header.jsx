@@ -6,7 +6,7 @@ import {Menu} from "semantic-ui-react";
 const Header = props => (
   <div id="header">
     <div>
-      <img src={LOGO} alt="computer-exchange_logo" />
+      <img src={LOGO} className="topLogo" alt="computer-exchange_logo" />
     </div>
     <div>
       <span>Rental Inventory Management</span>
