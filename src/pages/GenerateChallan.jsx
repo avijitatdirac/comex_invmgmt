@@ -2,9 +2,10 @@ import React from "react";
 import { Container, Checkbox, Label, Segment, Header, Dropdown, Divider, Table, Input, Select, Button, Icon, Form } from "semantic-ui-react";
 import Challan from "../components/Challan"
 import DatePicker from "react-datepicker";
+import {notify} from '../Classes';
+
 var moment = require('moment');
 require('react-datepicker/dist/react-datepicker.css');
-import {notify} from '../Classes';
 
 // branch options
 const paymentOptions = [
