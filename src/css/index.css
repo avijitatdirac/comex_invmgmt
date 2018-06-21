@@ -438,13 +438,20 @@
     background-color: #333333;
   }
   
-
-  #page-wrap{padding-top: 110px; padding-bottom: 85px;}
-  #header{width: 100%; position: fixed; left: 0; top: 0; z-index: 99;}
-   #header .topLogo{margin: 0 0 0 35px;}
+  
+  #root{background: #f1f2f7;}
+  .bm-burger-button{width: 17px; height: 13px; margin-top: -5px; left: 230px;}
+  .bm-burger-button button{color: #fff!important;}
+  .bm-burger-button:after{content: ''; width: 35px; height: 35px; background: #34b3fb; position: absolute; left: -9px; top: -12px; border-radius: 500px; z-index: -1;}
+  #page-wrap{padding-top: 88px; padding-bottom: 85px;}
+  #header{width: 100%; height: auto; background: #fff; color: #1587c7; display: flex; justify-content: space-between; position: fixed; left: 0; top: 0; z-index: 99; box-shadow: 1px 0 3px rgba(0,0,0,.15);}
+  #header .headerLeft{width: 291px; height: 78px; background: #1587c7; padding: 15px 0;}
+  #header .headerLeft img{width: 85%; margin-left: 15px;}
+  #header .headerRight{width: 100%; height: auto!important; display: flex; justify-content: center;}
+  #header .topLogo{margin: 0;}
   .ui.inverted.menu{border-radius: 0!important;}
   .ui.inverted.menu a.item{font-family: Arial, Helvetica, sans-serif; font-size: 13px;}
-  #footer{width: 100%; background: #222; margin: 30px 0 0; padding: 5px 0 0; position: fixed; left: 0; bottom: 0;}
+  #footer{width: 100%; background: #222; margin: 30px 0 0; padding: 5px 0 0; /*position: fixed; left: 0; bottom: 0;*/}
   #footer .inverted.menu{min-height: inherit; background: none; display: flex; justify-content: left; margin: 0; position: relative; left: -6px;}
   #footer .inverted.menu a{background: none; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #999; padding: 0 8px; line-height: normal;}
   #footer .inverted.menu a:before{background: #999;}
@@ -455,11 +462,50 @@
   ul.social-link li a:hover{color: #999;}
   ul.social-link li span{font-size: 12px; color: #999;}
 
-  .customNavMenu{position: relative; top: 100px;}
+  .customNavMenu{position: relative; top: 78px;}
+  .customNavMenu .bm-overlay{display: none;}
   .customNavMenu .bm-morph-shape, .customNavMenu .bm-cross-button{display: none;}
-  .customNavMenu .bm-menu{width: 240px!important; background: #1b1c1d; padding: 0; overflow: auto;}
-  .customNavMenu .bm-menu nav a{font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #c7c7c7; text-decoration: none; padding: 10px 20px; border-bottom: 1px solid #2b2b2b;}
-  .customNavMenu .bm-menu nav a:hover{background: #000; color: #f4f4f4; }
+  .customNavMenu .bm-menu{width: 240px!important; background: #1f2f46; padding: 0; overflow: auto; border-top: 4px solid #3261af;}
+  .customNavMenu .bm-menu nav a{font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #fff; text-decoration: none; padding: 9px 20px;}
+  .customNavMenu .bm-menu nav a:hover{background: #1a2940; color: #fff; }
+  .customNavMenu .bm-menu nav a i{font-size: 15px;}
+  .customNavMenu .bm-menu nav > a{border-bottom: 1px solid #1b2a40;}
+
+
+
+  .ui.input input {
+    margin: 0;
+    max-width: 100%;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+    outline: 0;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    text-align: left;
+    line-height: 1.21428571em;
+    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    padding: .67857143em 1em;
+    background: #fff;
+    border: 1px solid rgba(34, 36, 38, .15);
+    color: rgba(0, 0, 0, .87);
+    border-radius: .28571429rem;
+    -webkit-transition: border-color .1s ease, -webkit-box-shadow .1s ease;
+    transition: border-color .1s ease, -webkit-box-shadow .1s ease;
+    -o-transition: box-shadow .1s ease, border-color .1s ease;
+    transition: box-shadow .1s ease, border-color .1s ease;
+    transition: box-shadow .1s ease, border-color .1s ease, -webkit-box-shadow .1s ease;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.ui.input input::-webkit-input-placeholder {
+    color: rgba(191, 191, 191, .87);
+}
+.ui.input input::-moz-placeholder {
+    color: rgba(191, 191, 191, .87);
+}
+.ui.input input:-ms-input-placeholder {
+    color: rgba(191, 191, 191, .87);
+}
+
   
   /*------------------------------------------------------------------
   [ Responsive ]*/
@@ -559,4 +605,7 @@
     align:"center";
 }  
   
+.footerFixedClass{
+  position: fixed; left: 0; bottom: 0;
+}
   

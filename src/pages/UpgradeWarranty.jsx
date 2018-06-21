@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Moment from "react-moment"
 import { TextArea, Dimmer, Loader, Container, Image, Checkbox, Dropdown, Divider, Button, Form, Table, Modal, Input, Icon, Step, Header, Sidebar, Segment, FormGroup, Label, Grid, GridColumn, Card } from "semantic-ui-react";
 import DatePicker from "react-datepicker";
-
+import {notify} from '../Classes';
 require('react-datepicker/dist/react-datepicker.css');
 
 
@@ -98,7 +98,7 @@ class UpgradeWarranty extends Component {
     }
     else
     {
-        alert("Please Enter Valid Serial Number To Upgrade")
+        notify.error("Please Enter Valid Serial Number To Upgrade")
     }
 
       }

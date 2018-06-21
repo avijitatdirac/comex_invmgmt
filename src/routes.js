@@ -62,6 +62,24 @@ const ChallanDraft = Loadable({
   loader: () => import('./pages/ChallanDraft'),
   loading: Loading,
 })
+const AddUsers = Loadable({
+  loader: () => import('./pages/AddUsers'),
+  loading: Loading,
+})
+const AddOrganization = Loadable({
+  loader: () => import('./pages/AddOrganization.jsx'),
+  loading: Loading,
+})
+const ListUsers = Loadable({
+  loader: () => import('./pages/ListUsers.jsx'),
+  loading: Loading,
+})
+const ListOrgnization = Loadable({
+  loader: () => import('./pages/ListOrgnization.jsx'),
+  loading: Loading,
+})
+
+
 
 const routes = [
   { path: '/', exact: true, name: 'dashboard', component: DefaultLayout },
@@ -79,6 +97,11 @@ const routes = [
   { path: '/upgradeWarranty', name: 'UpgradeWarranty', component: UpgradeWarranty }, 
   { path: '/displayAssets', name: 'DisplayAssets', component: DisplayAssets }, 
   { path: '/removeAsset', name: 'RemoveAsset', component: RemoveAsset }, 
+  { path: '/addUsers', name: 'AddUsers', component: AddUsers }, 
+  { path: '/addOrganization', name: 'AddOrganization', component: AddOrganization }, 
+  { path: '/listUsers', name: 'ListUsers', component: ListUsers }, 
+  { path: '/listOrgnization', name: 'ListOrgnization', component: ListOrgnization }, 
+  
 ];
 
 export default routes;

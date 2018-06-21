@@ -3,7 +3,7 @@ import React from "react";
 import { Segment, Form, FormGroup, Button, Icon, Divider, Label, Checkbox } from "semantic-ui-react";
 import { Input, Table, TableHeader, TableRow,Dimmer,Loader } from "semantic-ui-react";
 import VariableWidthForm from "../components/AddAssetTypeForm/VariableWidthForm"
-
+import {notify} from '../Classes';
 
 export default class AddAssetType extends React.Component {
   
@@ -60,7 +60,7 @@ export default class AddAssetType extends React.Component {
     }
     else
     {
-      alert("Please enter an asset type to proceed further !!!")
+      notify.error("Please enter an asset type to proceed further !!!")
       this.setState({
         isAssetTypeSubmitted: false,
       })
@@ -78,7 +78,7 @@ export default class AddAssetType extends React.Component {
     var l=this.state.assetTypeAttributes.length-1;
     if(this.state.assetTypeAttributes[l].name==='')
     {
-      alert("Please enter valid attribute name")
+      notify.error("Please enter valid attribute name")
     }
     else
     {
@@ -90,7 +90,7 @@ export default class AddAssetType extends React.Component {
           dimmerActive:false
         })
         if (data.is_Error) {
-          alert("Asset Type already exists !!!")
+          notify.error("Asset Type already exists !!!")
         }
       })
     }
@@ -100,7 +100,7 @@ export default class AddAssetType extends React.Component {
   handleAddAttribute = (idx) => () => {
     if(this.state.assetTypeAttributes[idx].name === '')
     {
-      alert("Please enter valid attribute name")
+      notify.error("Please enter valid attribute name")
     }
     else
     {

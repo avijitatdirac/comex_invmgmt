@@ -2,7 +2,7 @@ import React from "react";
 import Moment from "react-moment"
 import DatePicker from "react-datepicker";
 import { Input, table,  Dropdown, Header, Divider, Table, Segment, Form, FormGroup, Button, Icon, Label, Container, Message } from "semantic-ui-react";
-
+import {notify} from '../Classes';
 var moment = require('moment');
 require('react-datepicker/dist/react-datepicker.css');
 
@@ -114,7 +114,8 @@ export default class EditAssetType extends React.Component {
     
     if(this.state.newAssetTypeAttributes[idx].name === '')
     {
-      alert("Please enter valid attribute name")
+      notify.error("Please enter valid attribute name")
+
     }
     else
     {
@@ -259,12 +260,11 @@ export default class EditAssetType extends React.Component {
       .then(data => {
         console.log('response: ', data)
         if(data.isSuccess) {
-          alert('success')
+          notify.success('success')
           this.setState({ submitSuccess: true, submitFailure: false })
-
           this.props.history.push('/')
         } else {
-          alert('failure')
+          notify.error('failure')
           this.setState({ submitFailure: true, submitSuccess: false })
         }
       })

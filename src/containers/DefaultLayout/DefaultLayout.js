@@ -10,7 +10,17 @@ import {  ToastContainer,toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MainMenu from '../../components/Menu'
 class DefaultLayout extends Component {
-
+  constructor(props){
+    super(props)
+    this.state = {
+      pageHieght:''
+    }
+  }
+  componentDidMount(){
+    const height = this.divElement.clientHeight;        
+    this.setState({pageHieght:height})
+   }
+  
   render() {
     return (
 			<React.Fragment>
@@ -22,8 +32,7 @@ class DefaultLayout extends Component {
         <ToastContainer autoClose={8000} />
 				<div id="outer-container">
 					<SideMenu />
-					<div id="page-wrap">
-					
+					<div id="page-wrap" ref={ (divElement) => this.divElement = divElement }>					
               <Switch>
                   {routes.map((route, idx) => {
                       return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
@@ -37,7 +46,7 @@ class DefaultLayout extends Component {
 						
 					</div>
 				</div>         
-        <Footer />
+        <Footer pageHieght={this.state.pageHieght} />
 			</React.Fragment>
 		);
   }

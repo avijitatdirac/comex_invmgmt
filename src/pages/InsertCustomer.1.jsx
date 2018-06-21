@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form, Icon, Button,Segment,Divider,Input,Header,Transition } from 'semantic-ui-react'
+import { notify } from '../Classes';
 
 class InsertCustomer extends Component
 {
@@ -186,7 +187,7 @@ class InsertCustomer extends Component
     }
     else
     {
-        alert("Please check your fields!!!There seems to be a problem")
+        notify.error("Please check your fields!!!There seems to be a problem")
 
     }
   }

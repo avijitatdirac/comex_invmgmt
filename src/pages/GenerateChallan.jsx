@@ -387,8 +387,7 @@ class GenerateChallan extends React.Component {
                     { method: 'GET' })
                     .then(r => r.json()) 
                     .then(data => {
-                        if(data.isSuccess) {
-							//alert('Saved as Draft')
+                        if(data.isSuccess) {							
 							notify.success('Saved as Draft')
 							window.location = '/challanDraft'                        }
                     })
@@ -796,8 +795,9 @@ class GenerateChallan extends React.Component {
 
 		var temp = this.state.challanCartItems		
 		var rentEndDate = (date !== undefined) ? moment(date) : moment()
+	
 		var rentStartDate = ((this.state.rentStartDate !== undefined) ? moment(this.state.rentStartDate) : moment())
-
+       
 		const newCartItems = temp.map((item, sidx) => {
 			if (idx !== sidx) {
 			  	return item;
@@ -1082,7 +1082,7 @@ class GenerateChallan extends React.Component {
 						<Table.Cell>
 						
 						 <Form.Input > 
-							<DatePicker  dateFormat="DD/MM/YYYY" 
+							<DatePicker className="ui input"  dateFormat="DD/MM/YYYY" 
 								selected={moment(obj.rentEndDate)}
 								onChange={this.onChangeRentEndDate(idx)}
 								size="small"

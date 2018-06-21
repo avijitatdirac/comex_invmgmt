@@ -383,17 +383,17 @@ class ManageCustomer extends Component
                             key={obj.Customer_Id+'pointer'+i}
                             style={{ cursor: "pointer" }}
                             >
-                            <Table.Cell>
-                              {obj.Address}     
+                            <Table.Cell>                                 
+                              <Form.Input  value={obj.Address} readOnly />  
                             </Table.Cell>
                             <Table.Cell>
-                              {obj.City}    
+                            <Form.Input  value={obj.City} readOnly /> 
                             </Table.Cell>
                             <Table.Cell>
-                             {obj.State}   
+                            <Form.Input  value={obj.State} readOnly />                             
                             </Table.Cell>
                             <Table.Cell>
-                            {obj.Pincode}   
+                               <Form.Input  value={obj.Pincode} readOnly /> 
                             </Table.Cell>
                             <Table.Cell>
                             <Form.Input  value={obj.GST_Value} onChange={this.changeGST(idx)}/>     
@@ -479,7 +479,7 @@ class ManageCustomer extends Component
             })}
             </Table.Body>
             </Table>
-            <Button color="blue" onClick={this.editCustomerDimmer}><Icon name="save"/>Update</Button> 
+            <Button style={{'margin-bottom':'8px'}} color="blue" onClick={this.editCustomerDimmer}><Icon name="save"/>Update</Button> 
         </div>
         )
         }

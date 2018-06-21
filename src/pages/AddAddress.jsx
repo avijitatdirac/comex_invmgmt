@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Radio, Menu, Dimmer, Loader, Container, Image, Checkbox, Dropdown, Divider, Button, Form, Table, Modal, Input, Icon, Step, Header, Sidebar, Segment, FormGroup, Label, Grid, GridColumn, Card } from "semantic-ui-react";
+import { notify } from "../Classes";
 
 class AddAddress extends Component
 {
@@ -378,7 +379,7 @@ class AddAddress extends Component
     !/^\d+$/.test(this.state.customerAddress[l].ContactNumber1) ||
     this.state.customerAddress[l].Email1 === '' || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.customerAddress[l].Email1)
     )
-    alert("Please Enter relevant Address Data. Press 'Add More' to Check where the Problem is")
+    notify.error("Please Enter relevant Address Data. Press 'Add More' to Check where the Problem is")
     else
    {
     var submitSuccess=true

@@ -14,6 +14,7 @@ import {
 	Loader,
 	Card,
 } from 'semantic-ui-react';
+import {notify} from '../Classes';
 var moment = require('moment');
 
 const componentRender = {
@@ -196,7 +197,7 @@ class Dashboard extends Component {
 						this.setState({ dimmerActive: false })
 					);
 				} else {
-					alert('cannot access data');
+					notify.error('cannot access data');
 					this.setState({ dimmerActive: false });
 				}
 			})
@@ -223,7 +224,7 @@ class Dashboard extends Component {
 						this.setState({ dimmerActive: false })
 					);
 				} else {
-					alert('cannot access data');
+					notify.error('cannot access data');
 					this.setState({ dimmerActive: false });
 				}
 			})
@@ -253,7 +254,7 @@ class Dashboard extends Component {
 						this.setState({ dimmerActive: false })
 					);
 				} else {
-					alert('cannot access data');
+					notify.error('cannot access data');
 					this.setState({ dimmerActive: false });
 				}
 			})
@@ -286,7 +287,7 @@ class Dashboard extends Component {
 						this.setState({ dimmerActive: false })
 					);
 				} else {
-					alert('cannot access data');
+					notify.error('cannot access data');
 					this.setState({ dimmerActive: false });
 				}
 			})

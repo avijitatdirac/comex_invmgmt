@@ -4,6 +4,7 @@ import AssetCard from "../components/DisplayAssetComponents/AssetCard";
 import GenerateChallan from "./GenerateChallan";
 import { Loader, Dimmer, Container, List, Checkbox, Dropdown, Divider, Button, Form, Table, Modal, Input, Icon, Step, Header, Sidebar, Segment, FormGroup, Label, Grid, GridColumn, Card, TableFooter } from "semantic-ui-react";
 import {ReactDOM} from 'react-dom'  
+import { notify } from "../Classes";
   
       
 // card group
@@ -699,6 +700,7 @@ class DisplayAssets extends Component {
 			c=c+1
 		}
 		this.setState({cartItems:cartarr})
+		notify.successBottom('Item successfully added to your cart')
 
 	}
 
@@ -1016,8 +1018,8 @@ class DisplayAssets extends Component {
 	 * User wants to checkout
 	 */
 	onCheckout = () => {
-		this.setState({isCheckedOut: true},);
-	
+		this.setState({isCheckedOut: true});
+	   
 	}
 
 	filterSerialResult = () => {
